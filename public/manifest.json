@@ -1,0 +1,22 @@
+{
+    "name": "Quiz List",
+    "short_name": "Quiz List",
+    "description": "Quiz List is an application to help Quiz Makers and Quiz Takers",
+    "start_url": "/",
+    "background_color": "#04397b",
+    "theme_color": "#04397b",
+    "display": "standalone",
+    "form_factor": "wide",
+    "icons": [
+      {
+        "src": "/icons/icon-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/icons/icon-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+}

@@ -1,0 +1,146 @@
+$mobileMenuBreakPointS: 768px;
+$mobileMenuBreakPointM: 992px;
+$mobileMenuBreakPointL: 1200px;
+
+:root {
+  // Main
+  --space: 24px;
+  --fontWeight: 600;
+  --borderRadius: 5px;
+  --fieldHeight: 42px;
+  --minHeight: 100dvh;
+  --inputHeight: 42.25px;
+  --defaultFontSize: 16px;
+  --collapsedHeight: 58px;
+  --transition: 0.24s var(--altTransition) !important;
+  --altTransition: cubic-bezier(0.77, 0.2, 0.05, 1) !important;
+  --font: '__Plus_Jakarta_Sans_a182b8', '__Plus_Jakarta_Sans_Fallback_a182b8', Helvetica, Arial, sans-serif;
+  --cardShadow: rgb(145 158 171 / 30%) 0px 1px 2px 0px, rgb(145 158 171 / 12%) 0px 12px 24px -4px !important;
+
+  // Breakpoints
+  --mobileMenuBreakPointS: $mobileMenuBreakPointS;
+  --mobileMenuBreakPointM: $mobileMenuBreakPointM;
+  --mobileMenuBreakPointL: $mobileMenuBreakPointL;
+  
+  // Colors
+  --bg: #041b44;
+  --main: #5D87FF;
+  --cardBg: #04397b;
+  --success: #13DEB9;
+  --fontColor: white;
+  --darkMain: var(--bg);
+  --gameBlue: #00c2ff;
+  --iconLeft: #0082C6;
+  --iconRight: #3DAFEB;
+  --mainDark: var(--iconLeft);
+  --darkMainLight: #1972ea;
+  --altMain: rgb(61 175 235);
+  --drawerBorder: var(--cardBg);
+  --lightLabelColor: #195db3;
+  --lightInputBorderColor: #c4c4c4;
+  
+  // Questions
+  --Easy1: var(--iconRight);
+  --Easy2: #39d2c0;
+  --Easy3: #7DF9FF;
+  --Easy4: var(--mainDark);
+  --Easy: var(--Easy4);
+  
+  --Medium1: var(--mainDark);
+  --Medium2: #fae84a;
+  --Medium3: var(--darkMainLight);
+  --Medium4: #20a797;
+  --Medium5: #01ae9a;
+  --Medium: var(--Medium5);
+
+  --Hard1: #e72f6e;
+  --Hard2: var(--darkMainLight);
+  --Hard3: #c20042;
+  --Hard4: #bd3966;
+  --Hard5: #c01d55;
+  --Hard: var(--Hard5);
+  
+  --Extreme1: #6f61ef;
+  --Extreme2: #c874fe;
+  --Extreme: var(--Extreme1);
+
+  // Other Colors
+  --teal: #3fa5e3;
+  --darkSub: #1c2a49;
+  --tealLight: #49BEFF;
+  --mainLight: #ecf2ff;
+  --navyBlueBG: #071632;
+  --darkBorder: #151515;
+  --iconLeftOld: #615DFF;
+  --lightBorder: #e5eaef;
+  --defFontColor: #adb0bb;
+  --cardBgViolet: #1c3c81;
+  --defaultColor: #2A3547;
+  --tealSuperLight: #3dd9eb;
+  --drawerBorderOld: #152a37;
+  --lightRipple: rgba(0, 81, 255, 0.1);
+  --darkRipple: rgba(93, 135, 255, 0.25);
+}
+
+body {
+  min-height: var(--minHeight);
+  color: var(--fontColor) !important;
+  background: var(--darkMain) !important;
+  font-size: var(--defaultFontSize) !important;
+}
+
+aside {
+  min-height: var(--minHeight);
+  background: var(--cardBg);
+}
+
+header, footer {
+  width: 100%;
+  display: flex;
+  min-height: 50px;
+  align-items: center;
+  justify-content: center;
+  background: var(--cardBg);
+}
+
+ul {
+  list-style: none;
+}
+
+.borderRadius {
+  border-radius: var(--borderRadius);
+}
+
+a {
+  text-decoration: none;
+  color: var(--fontColor);
+  transition: var(--transition);
+  &[href] {
+    &:hover {
+      color: var(--iconRight);
+      background: var(--darkMain);
+    }
+  }
+}
+
+nav {
+  .label {
+    font-weight: 700;
+    color: var(--iconRight);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 15px;
+  background: var(--darkMain);
+}
+
+@media (max-width: $mobileMenuBreakPointS) {
+  aside {
+    display: none !important;
+  }
+}
