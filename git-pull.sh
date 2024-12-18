@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# will go through each directory // folder in the current folder where this file is hosted
-# and check if the directory // folder is a git repository
-# if so, it will run git fetch origin --prune and then git pull
-
 # before your first time using this, run 'chmod +x git-pull.sh'
 # in your terminal where this file is hosted
 # to make it executable
@@ -11,6 +7,10 @@
 
 # then to execute this script
 # run './git-pull.sh' in your terminal where this file is hosted and executable
+
+# the script will go through each directory // folder in the current folder where this file is hosted
+# and check if the directory // folder is a git repository
+# if so, it will run 'git fetch origin --prune' and then 'git pull'
 
 for dir in */ ; do
     if [ -d "$dir/.git" ]; then
