@@ -1,21 +1,27 @@
 import LocalAudio from './LocalAudio';
+import SiteAudio from './SiteAudio';
 import SignalCanvas from './SignalCanvas';
-import type { AudioSignal } from './audio.types';
+import type { AudioSignal, AudioVisualizerState } from './audio.types';
 import { useEffect, useState, useSyncExternalStore } from 'react';
 import { normalizeVisualizerSettings, visualizerConfig } from '../../config/visualizer';
 import { AccessibilityInfo, AppState, Platform, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { getServerVisualizerPreferences, readVisualizerPreferences, saveVisualizerPreferences, subscribeVisualizerPreferences } from './preferences';
 
 type AdjustmentKey = `speed` | `density` | `intensity`;
-type AudioVisualizerProps = { compact?: boolean };
+type AudioVisualizerProps = {
+  compact?: boolean;
+  onStateChange?: (state: AudioVisualizerState) => void;
+};
 
-const AudioVisualizer = ({ compact = false }: AudioVisualizerProps) => {
+const AudioVisualizer = ({ compact = false, onStateChange }: AudioVisualizerProps) => {
   const { width } = useWindowDimensions();
   const [paused, setPaused] = useState(false);
   const [tuning, setTuning] = useState(false);
   const [resetVersion, setResetVersion] = useState(0);
-  const [audioPlaying, setAudioPlaying] = useState(false);
-  const [signal, setSignal] = useState<AudioSignal | null>(null);
+  const [localAudioPlaying, setLocalAudioPlaying] = useState(false);
+  const [localSignal, setLocalSignal] = useState<AudioSignal | null>(null);
+  const [siteAudioPlaying, setSiteAudioPlaying] = useState(false);
+  const [siteSignal, setSiteSignal] = useState<AudioSignal | null>(null);
   const [reducedMotion, setReducedMotion] = useState(true);
   const [appActive, setAppActive] = useState(AppState.currentState !== `background`);
   const settings = useSyncExternalStore(subscribeVisualizerPreferences, readVisualizerPreferences, getServerVisualizerPreferences);
@@ -50,8 +56,14 @@ const AudioVisualizer = ({ compact = false }: AudioVisualizerProps) => {
     setResetVersion((current) => current + 1);
   };
 
+  const signal = siteSignal ?? localSignal;
+  const audioPlaying = siteSignal ? siteAudioPlaying : localAudioPlaying;
   const status = reducedMotion ? `Reduced Motion` : paused ? `Visuals Paused` : audioPlaying ? `Audio Reactive` : `Ambient Motion`;
   const active = appActive && !paused && !reducedMotion;
+
+  useEffect(() => {
+    onStateChange?.({ signal, audioPlaying, active });
+  }, [signal, audioPlaying, active, onStateChange]);
 
   return (
     <View style={[styles.panel, width < 600 && styles.panelSmall]}>
@@ -74,7 +86,7 @@ const AudioVisualizer = ({ compact = false }: AudioVisualizerProps) => {
       <View style={styles.monitor}>
         <View style={styles.monitorTop}>
           <Text style={styles.monitorLabel}>KALASHI — SIGNAL {settings.mode === `orbit` ? `02` : `01`}</Text>
-          <Text style={styles.monitorLabel}>{audioPlaying ? `INPUT: LOCAL AUDIO` : `INPUT: GENERATIVE`}</Text>
+          <Text style={styles.monitorLabel}>{siteSignal ? `INPUT: SITE AUDIO` : audioPlaying ? `INPUT: LOCAL AUDIO` : `INPUT: GENERATIVE`}</Text>
         </View>
         <SignalCanvas
           key={`${resetVersion}:${settings.density}`}
@@ -171,12 +183,14 @@ const AudioVisualizer = ({ compact = false }: AudioVisualizerProps) => {
           </View>
           <Text style={styles.helper}>{Platform.OS === `web` ? `Your settings are saved in this browser. ` : ``}Speed changes ambient motion and orbit rotation; your audio keeps its original tempo.</Text>
           <View style={styles.audioDivider} />
-          <LocalAudio suspended={!appActive} onSignalChange={setSignal} onPlaybackChange={setAudioPlaying} />
+          <LocalAudio suspended={!appActive} onSignalChange={setLocalSignal} onPlaybackChange={setLocalAudioPlaying} />
         </View>
 
+      <SiteAudio suspended={!appActive} onSignalChange={setSiteSignal} onPlaybackChange={setSiteAudioPlaying} />
+
       <View style={styles.captionRow}>
-        <Text style={styles.caption}>{reducedMotion ? `Animation is off to respect your device’s reduced-motion setting.` : audioPlaying ? `Reacting to your local audio. Change the signal in Tune Visuals.` : Platform.OS === `web` ? `An ambient signal, made to move. Load your own audio in Tune Visuals.` : `An ambient signal, made to move. Tune its shape, speed, and energy.`}</Text>
-        <Text style={styles.captionFootnote}>Spotify playback is independent.</Text>
+        <Text style={styles.caption}>{reducedMotion ? `Animation is off to respect your device’s reduced-motion setting.` : paused ? `Visuals are paused. Press Resume to see the audio move again.` : siteSignal ? audioPlaying ? `All visualizers are reacting to this tab’s audio.` : `Site audio is connected. Play a track in this tab to bring it to life.` : audioPlaying ? `Reacting to your local audio. Change the signal in Tune Visuals.` : Platform.OS === `web` ? `An ambient signal, made to move. Sync site audio or load your own track in Tune Visuals.` : `An ambient signal, made to move. Tune its shape, speed, and energy.`}</Text>
+        <Text style={styles.captionFootnote}>{Platform.OS === `web` ? `Use Sync site audio to include Spotify and other players in this tab.` : `Spotify playback is independent.`}</Text>
       </View>
     </View>
   );

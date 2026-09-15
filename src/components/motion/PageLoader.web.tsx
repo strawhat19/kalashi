@@ -1,4 +1,4 @@
-import { BrandMark } from '../Icons.web';
+import { OrbitBrandMark } from '../Icons.web';
 import LoaderSpectrum from './LoaderSpectrum.web';
 import { loaderConfig } from '../../config/loader';
 import { useId, useRef, useEffect, useState, type CSSProperties } from 'react';
@@ -116,7 +116,7 @@ const PageLoader = ({ ready, onReveal, onComplete }: PageLoaderProps) => {
     ))}</div>
     <div className={`page-loader__content`}>
       <header className={`page-loader__header`} aria-hidden={`true`}>
-        <div className={`page-loader__brand`}><BrandMark size={34} /><span>{`KALASHI`}<small>{`MUSIC / WORLDWIDE`}</small></span></div>
+        <div className={`page-loader__brand`}><OrbitBrandMark size={44} /><span>{`KALASHI`}<small>{`MUSIC / WORLDWIDE`}</small></span></div>
         <span className={`page-loader__location`}>{`BANGLADESH → ATLANTA`}</span>
       </header>
       <div className={`page-loader__center`}>

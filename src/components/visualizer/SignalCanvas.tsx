@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Svg, { Circle, Line, Path, Rect } from 'react-native-svg';
 import { useVisualizerVisibility } from './useVisualizerVisibility';
 import { visualizerConfig, type VisualizerSettings } from '../../config/visualizer';
+import { ambientSpectrumSample, ambientWaveformSample } from './ambientSignal';
 
 type SignalCanvasProps = {
   active: boolean;
@@ -11,26 +12,21 @@ type SignalCanvasProps = {
   audioPlaying: boolean;
   signal: AudioSignal | null;
   settings: VisualizerSettings;
+  presentation?: `monitor` | `mini` | `preview`;
+  showMark?: boolean;
 };
 
 type VisualFrame = { phase: number; spectrum: number[]; waveform: number[] };
 
-const ambientSample = (index: number, count: number, phase: number) => {
-  const position = index / Math.max(1, count - 1);
-  const envelope = Math.pow(Math.sin(position * Math.PI), 1.7);
-  const carrier = Math.sin(position * 56 + phase * 2.2) * 0.65
-    + Math.sin(position * 107 - phase * 1.7) * 0.25
-    + Math.cos(position * 21 + phase * 0.8) * 0.1;
-  return carrier * envelope;
-};
-
 const createAmbientFrame = (count: number, phase: number): VisualFrame => ({
   phase,
-  waveform: Array.from({ length: count }, (_, index) => ambientSample(index, count, phase)),
-  spectrum: Array.from({ length: count }, (_, index) => 0.1 + Math.abs(ambientSample(index, count, phase)) * 0.8),
+  waveform: Array.from({ length: count }, (_, index) => ambientWaveformSample(index / Math.max(1, count - 1), phase)),
+  spectrum: Array.from({ length: count }, (_, index) => ambientSpectrumSample(index / Math.max(1, count - 1), phase)),
 });
 
-const SignalCanvas = ({ signal, active, compact, settings, audioPlaying }: SignalCanvasProps) => {
+const SignalCanvas = ({ signal, active, compact, settings, audioPlaying, presentation = `monitor`, showMark = true }: SignalCanvasProps) => {
+  const mini = presentation === `mini`;
+  const monitor = presentation === `monitor`;
   const phaseRef = useRef(0);
   const smoothRef = useRef<number[]>([]);
   const { visible, canvasRef } = useVisualizerVisibility();
@@ -82,16 +78,20 @@ const SignalCanvas = ({ signal, active, compact, settings, audioPlaying }: Signa
   }).join(` `);
 
   return (
-    <View ref={canvasRef} accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={[styles.canvas, compact && styles.compact]}>
-      <Svg width="100%" height="100%" viewBox="0 0 1000 320" preserveAspectRatio="xMidYMid meet">
-        {Array.from({ length: 21 }, (_, index) => (
-          <Line key={`grid-v-${index}`} x1={index * 50} x2={index * 50} y1={0} y2={320} stroke="#FFFFFF" strokeOpacity={0.035} />
-        ))}
-        {Array.from({ length: 7 }, (_, index) => (
-          <Line key={`grid-h-${index}`} x1={0} x2={1000} y1={index * 50 + 10} y2={index * 50 + 10} stroke="#FFFFFF" strokeOpacity={0.035} />
-        ))}
-        <Line x1={0} x2={1000} y1={160} y2={160} stroke={visualizerConfig.accent} strokeOpacity={0.15} strokeDasharray="2 6" />
-        <Line x1={500} x2={500} y1={0} y2={320} stroke={visualizerConfig.accent} strokeOpacity={0.1} strokeDasharray="2 6" />
+    <View ref={canvasRef} accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={[styles.canvas, compact && styles.compact, !monitor && styles.embedded]}>
+      <Svg width="100%" height="100%" viewBox={mini ? `380 40 240 240` : `0 0 1000 320`} preserveAspectRatio="xMidYMid meet">
+        {monitor && (
+          <>
+            {Array.from({ length: 21 }, (_, index) => (
+              <Line key={`grid-v-${index}`} x1={index * 50} x2={index * 50} y1={0} y2={320} stroke="#FFFFFF" strokeOpacity={0.035} />
+            ))}
+            {Array.from({ length: 7 }, (_, index) => (
+              <Line key={`grid-h-${index}`} x1={0} x2={1000} y1={index * 50 + 10} y2={index * 50 + 10} stroke="#FFFFFF" strokeOpacity={0.035} />
+            ))}
+            <Line x1={0} x2={1000} y1={160} y2={160} stroke={visualizerConfig.accent} strokeOpacity={0.15} strokeDasharray="2 6" />
+            <Line x1={500} x2={500} y1={0} y2={320} stroke={visualizerConfig.accent} strokeOpacity={0.1} strokeDasharray="2 6" />
+          </>
+        )}
         {settings.mode === `waveform` ? (
           <>
             {frame.spectrum.map((sample, index) => {
@@ -101,35 +101,38 @@ const SignalCanvas = ({ signal, active, compact, settings, audioPlaying }: Signa
             })}
             <Path d={linePath} fill="none" stroke={visualizerConfig.accent} strokeWidth={13} strokeOpacity={0.035} strokeLinejoin="round" />
             <Path d={linePath} fill="none" stroke={visualizerConfig.accent} strokeWidth={6} strokeOpacity={0.12} strokeLinejoin="round" />
-            <Path d={linePath} fill="none" stroke={visualizerConfig.accent} strokeWidth={2} strokeLinejoin="round" />
+            <Path d={linePath} fill="none" stroke={visualizerConfig.accent} strokeWidth={presentation === `preview` ? 4 : 2} strokeLinejoin="round" />
             <Circle cx={500} cy={160} r={3.5} fill={visualizerConfig.alert} />
           </>
         ) : (
           <>
-            <Circle cx={500} cy={160} r={116} stroke="#FFFFFF" strokeOpacity={0.06} fill="none" />
-            <Circle cx={500} cy={160} r={57} stroke={visualizerConfig.accent} strokeOpacity={0.15} fill="none" />
-            <Circle cx={500} cy={160} r={72} stroke={visualizerConfig.accent} strokeOpacity={0.5} strokeWidth={0.6} fill="none" />
+            <Circle cx={500} cy={160} r={mini ? 114 : 116} stroke={mini ? visualizerConfig.accent : `#FFFFFF`} strokeOpacity={mini ? 0.12 : 0.06} fill="none" />
+            <Circle cx={500} cy={160} r={mini ? 45 : 57} stroke={visualizerConfig.accent} strokeOpacity={mini ? 0.4 : 0.15} strokeWidth={mini ? 1.5 : 1} fill="none" />
+            <Circle cx={500} cy={160} r={mini ? 59 : 72} stroke={visualizerConfig.accent} strokeOpacity={0.5} strokeWidth={mini ? 1.5 : 0.6} fill="none" />
             {frame.spectrum.map((sample, index) => {
-              const angle = (index / frame.spectrum.length) * Math.PI * 2 - Math.PI / 2 + frame.phase * 0.06;
-              const radius = 73 + Math.min(72, sample * 58 * settings.intensity);
+              const angle = (index / frame.spectrum.length) * Math.PI * 2 - Math.PI / 2 + frame.phase * (mini ? 0.3 : 0.06);
+              const startRadius = mini ? 61 : 76;
+              // Keep a clearly legible ring at rest, with room for the spectrum to breathe.
+              const radius = mini ? 69 + Math.min(43, sample * 48 * settings.intensity) : 73 + Math.min(72, sample * 58 * settings.intensity);
               return (
                 <Line
                   key={`ray-${index}`}
-                  x1={500 + Math.cos(angle) * 76}
-                  y1={160 + Math.sin(angle) * 76}
+                  x1={500 + Math.cos(angle) * startRadius}
+                  y1={160 + Math.sin(angle) * startRadius}
                   x2={500 + Math.cos(angle) * radius}
                   y2={160 + Math.sin(angle) * radius}
                   stroke={index % 23 === 0 ? visualizerConfig.alert : visualizerConfig.accent}
-                  strokeWidth={index % 4 === 0 ? 2.5 : 1.4}
-                  strokeOpacity={0.5 + sample * 0.5}
+                  strokeWidth={mini ? (index % 4 === 0 ? 3.8 : 2.4) : (index % 4 === 0 ? 2.5 : 1.4)}
+                  strokeLinecap={mini ? `round` : `butt`}
+                  strokeOpacity={mini ? 0.7 + sample * 0.3 : 0.5 + sample * 0.5}
                 />
               );
             })}
-            <Path d="M 489 140 L 489 180 M 491 160 L 510 140 M 491 160 L 512 180" fill="none" stroke={visualizerConfig.accent} strokeWidth={3} />
-            <Circle cx={560} cy={160} r={3} fill={visualizerConfig.alert} />
+            {showMark ? <Path d="M 489 140 L 489 180 M 491 160 L 510 140 M 491 160 L 512 180" fill="none" stroke={visualizerConfig.accent} strokeWidth={mini ? 4 : 3} /> : null}
+            <Circle cx={mini ? 500 + Math.cos(frame.phase * 0.75) * 45 : 560} cy={mini ? 160 + Math.sin(frame.phase * 0.75) * 45 : 160} r={mini ? 4 : 3} fill={visualizerConfig.alert} />
           </>
         )}
-        <Path d="M 12 30 L 12 12 L 30 12 M 970 12 L 988 12 L 988 30 M 12 290 L 12 308 L 30 308 M 970 308 L 988 308 L 988 290" fill="none" stroke="#9AAA8D" strokeOpacity={0.45} />
+        {monitor && <Path d="M 12 30 L 12 12 L 30 12 M 970 12 L 988 12 L 988 30 M 12 290 L 12 308 L 30 308 M 970 308 L 988 308 L 988 290" fill="none" stroke="#9AAA8D" strokeOpacity={0.45} />}
       </Svg>
     </View>
   );
@@ -138,6 +141,7 @@ const SignalCanvas = ({ signal, active, compact, settings, audioPlaying }: Signa
 const styles = StyleSheet.create({
   compact: { height: 190 },
   canvas: { height: 280, width: `100%` },
+  embedded: { height: `100%`, width: `100%` },
 });
 
 export default SignalCanvas;

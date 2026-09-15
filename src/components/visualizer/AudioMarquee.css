@@ -1,0 +1,4 @@
+.audio-marquee { height: var(--audio-marquee-height, 26px); overflow: hidden; color: var(--green, #b1f750); pointer-events: none; }
+.audio-marquee__canvas { display: block; overflow: hidden; }
+.audio-marquee__pattern { fill: currentColor; }
+.audio-marquee__bar { opacity: .95; }

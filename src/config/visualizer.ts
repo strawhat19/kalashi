@@ -7,6 +7,14 @@ export type VisualizerSettings = {
   mode: VisualizerMode;
 };
 
+/** Shared feel for the logo orbit and its straight header counterpart. */
+export const miniVisualizerSettings: VisualizerSettings = {
+  mode: `orbit`,
+  speed: 1,
+  intensity: 1.15,
+  density: 64,
+};
+
 export const visualizerConfig = {
   fps: 30,
   smoothing: 0.76,
