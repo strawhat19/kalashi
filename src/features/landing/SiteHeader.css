@@ -2,10 +2,9 @@
   position: relative;
   z-index: 25;
   width: 100%;
-  max-width: 1800px;
   min-height: 100px;
-  margin: 0 auto;
-  padding: 0 min(3.75%, 67.5px);
+  margin: 0;
+  padding: 0 3.75%;
   border-bottom: 0;
 }
 
