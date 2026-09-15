@@ -3,8 +3,10 @@ import Head from 'expo-router/head';
 import { artist, releases } from '../../config/artist';
 import { useEffect, useRef, useState, useContext } from 'react';
 import SplitText from '../../components/motion/SplitText.web';
+import ScrollMarquee from '../../components/motion/ScrollMarquee.web';
 import { PageIntroContext } from '../../components/motion/PageIntroContext';
 import AudioVisualizer from '../../components/visualizer/AudioVisualizer';
+import { scrollToAnchor } from '../../components/motion/scrollToAnchor.web';
 import { ArrowIcon, BrandMark, PlayIcon, SpotifyIcon } from '../../components/Icons.web';
 
 const LandingScreen = () => {
@@ -28,7 +30,7 @@ const LandingScreen = () => {
     player.current?.scrollIntoView({ block: `center`, behavior: window.matchMedia(`(prefers-reduced-motion: reduce)`).matches ? `instant` : `smooth` });
   };
 
-  return <div className={`kalashi-site`}>
+  return <div className={`kalashi-site`} onClick={scrollToAnchor}>
     <Head><title>{`KALASHI — A World In My Sound`}</title><meta name={`description`} content={`Kalashi Music. Bangladesh roots. Atlanta energy. Explore the music and find your frequency.`} /></Head>
     <a className={`skip-link`} href={`#main`}>{`Skip to content`}</a>
     <header className={`site-header`}>
@@ -45,7 +47,7 @@ const LandingScreen = () => {
     <main id={`main`}>
       <section id={`home`} className={`hero`} aria-labelledby={`hero-title`}>
         <div className={`hero-index`}><span><i className={`red-square`} />{`TWO WORLDS. UNFILTERED SOUND.`}</span><span>{`BANGLADESH → ATLANTA → EVERYWHERE`}</span></div>
-        <h1 id={`hero-title`} className={`hero-wordmark`}><SplitText text={`KALASHI`} by={`characters`} ready={introReady} /><span className={`wordmark-asterisk`} aria-hidden={`true`}>{`✳`}</span></h1>
+        <h1 id={`hero-title`} className={`hero-wordmark`}><ScrollMarquee text={`KALASHI MUSIC`} speed={72} ready={introReady} /></h1>
         <div className={`hero-scene`}>
           <div className={`portrait-stage`}>
             <img className={`hero-portrait`} src={`/media/music/portrait.jpg`} width={640} height={640} alt={`Kalashi standing in a concrete doorway, holding a baseball cap`} fetchPriority={`high`} />
@@ -69,7 +71,7 @@ const LandingScreen = () => {
         <div className={`hero-bottom`}><span>{`BORN IN BANGLADESH`}</span><span className={`hero-bottom-center`}>{`BASED IN ATLANTA. BUILT DIFFERENT.`}</span><a href={`#music`}>{`SCROLL TO FEEL SOMETHING`}<span>{`↓`}</span></a></div>
       </section>
 
-      <div className={`frequency-strip`} aria-hidden={`true`}><span>{`NO BORDERS. JUST FREQUENCIES.`}</span><span>{`✳`}</span><span>{`NO BORDERS. JUST FREQUENCIES.`}</span><span>{`✳`}</span></div>
+      <div className={`frequency-strip`}><ScrollMarquee reverse text={`NO BORDERS. JUST FREQUENCIES.`} speed={52} ready={introReady} /></div>
 
       <section id={`music`} className={`music-section section-shell`} aria-labelledby={`music-title`}>
         <div className={`section-topline`}><span>{`01 / THE MUSIC`}</span><span>{`PRESS PLAY. STAY A WHILE.`}</span></div>

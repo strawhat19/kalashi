@@ -74,7 +74,15 @@ After changing defaults, press Reset in the app or change `storageKey` to discar
 
 The web landing uses normal document scrolling. `src/components/motion/AppFrame.css` overrides Expo's native-style document sizing, and the loader never captures pointer input or locks scrolling.
 
-`AppFrame.web.tsx` contains the loader timing: a 220 ms minimum, 320 ms exit, and a 1200 ms maximum wait for fonts. `SplitText.web.tsx` and `SplitText.css` provide one-time character/word reveals as headings enter the viewport. Reduced motion skips both effects; static content remains readable without JavaScript.
+Landing section links use `scrollToAnchor.web.ts` to scroll and update the URL hash with `history.replaceState`, preserving Expo's history state. They do not create route-history entries or remount the player and landing content. Modified clicks and external links retain normal browser behavior. `AppFrame.web.tsx` keys the loader to `usePathname()` and remembers the current page for this document, so same-path/hash remounts do not replay it. A new pathname or full document load can show the loader.
+
+`PageLoader.web.tsx` runs one continuous intro: a percentage counter with velocity-based vertical blur, a filling progress line, 48 animated spectrum bars, and 12 staggered equalizer shutters. The percentage represents the intro's progress, not network download bytes. It advances to 90%, waits for web fonts (bounded by a 1600 ms timeout), reaches 100%, and reveals the page. The spectrum is a silent ambient animation, independent of Spotify or the Sound Lab's local audio.
+
+Tune `src/config/loader.ts` to change the loading/exit timing, shutter count, skew, stagger, maximum blur, spectrum density, speed, gain, and colors. The defaults finish in about 1.8 seconds after the client starts when fonts are ready. `AppFrame.web.tsx` coordinates the loader exit with the hero text; progress updates stay inside the loader without rerendering the landing page. The overlay stays visible through hydration and exits once, with no independent CSS dismissal timer.
+
+Web fonts are preloaded from `/media/fonts` and checked with the browser Font Loading API. `SplitText.web.tsx` and `SplitText.css` prepare text before paint and provide one-time character/word reveals as headings enter the viewport. Reduced motion skips the intro; a `noscript` fallback keeps static content readable without JavaScript.
+
+`ScrollMarquee.web.tsx` powers the repeating **KALASHI MUSIC** heading and lime frequency strip. The rows always travel in opposite directions: scrolling down moves the heading left and the lime strip right; scrolling up reverses both without restarting their position. The ✳ separators rotate with each row's direction. The lime row uses the `reverse` prop. Adjust each row's `speed` prop in `LandingScreen.web.tsx` (pixels per second), plus `--marquee-gap` and `--marquee-symbol-size` in the landing stylesheet. Animation pauses offscreen, in background tabs, and for reduced motion; static text remains readable without JavaScript.
 
 ## Checks and web export
 

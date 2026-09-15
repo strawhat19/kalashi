@@ -1,5 +1,5 @@
 import './SplitText.css';
-import { useRef, useEffect, type CSSProperties } from 'react';
+import { useRef, useLayoutEffect, type CSSProperties } from 'react';
 
 type SplitTextProps = {
   text: string;
@@ -13,7 +13,7 @@ const SplitText = ({ text, delay = 0, ready = true, className = ``, by = `words`
   const elementRef = useRef<HTMLSpanElement>(null);
   let unitIndex = 0;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const element = elementRef.current;
     if (!element) return;
     const preference = window.matchMedia(`(prefers-reduced-motion: reduce)`);

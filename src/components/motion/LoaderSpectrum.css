@@ -1,0 +1,19 @@
+.loader-spectrum { position: relative; width: 100%; height: clamp(80px, 14vh, 130px); overflow: hidden; contain: layout paint; pointer-events: none; }
+.loader-spectrum__layer { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(var(--loader-bar-count, 48), minmax(0, 1fr)); column-gap: clamp(1px, .5vw, 7px); place-items: center; }
+.loader-spectrum__layer--base { color: #333b30; }
+.loader-spectrum__layer--filled { color: var(--loader-green, #b1f750); clip-path: inset(0 calc((1 - clamp(0, var(--loader-progress, 0), 1)) * 100%) 0 0); }
+.loader-spectrum__bar { position: relative; display: block; width: 3px; max-width: 100%; min-height: 2px; border-radius: 1px; background: currentColor; transform-origin: center; animation: loader-spectrum-pulse calc(var(--loader-bar-duration, 1400ms) / max(.1, var(--loader-spectrum-speed, 1))) cubic-bezier(.45, 0, .55, 1) calc(var(--loader-bar-delay, -400ms) / max(.1, var(--loader-spectrum-speed, 1))) infinite; }
+.loader-spectrum__bar--peak::after { position: absolute; right: 0; bottom: calc(100% + 7px); left: 0; height: 2px; border-radius: 1px; background: currentColor; content: ''; opacity: .7; }
+.loader-spectrum__layer--filled .loader-spectrum__bar { box-shadow: 0 0 9px color-mix(in srgb, var(--loader-green, #b1f750) 8%, transparent); }
+.loader-spectrum__layer--filled .loader-spectrum__bar--accent::after { background: var(--loader-red, #ef6256); opacity: .95; }
+
+@keyframes loader-spectrum-pulse {
+  0%, 100% { transform: scaleY(calc(var(--loader-bar-rest, .6) * clamp(0, var(--loader-spectrum-gain, 1), 1.8))); }
+  24% { transform: scaleY(calc(var(--loader-bar-lift, 1) * clamp(0, var(--loader-spectrum-gain, 1), 1.8))); }
+  49% { transform: scaleY(calc(var(--loader-bar-dip, .35) * clamp(0, var(--loader-spectrum-gain, 1), 1.8))); }
+  76% { transform: scaleY(calc(var(--loader-bar-swell, .8) * clamp(0, var(--loader-spectrum-gain, 1), 1.8))); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader-spectrum__bar { animation: none; transform: scaleY(calc(var(--loader-bar-rest, .6) * clamp(0, var(--loader-spectrum-gain, 1), 1.8))); }
+}
