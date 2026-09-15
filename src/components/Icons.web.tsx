@@ -1,0 +1,6 @@
+type IconProps = { size?: number; className?: string };
+
+export const ArrowIcon = ({ size = 20, className }: IconProps) => <svg width={size} height={size} className={className} viewBox={`0 0 24 24`} fill={`none`} aria-hidden={`true`}><path d={`M5 19 19 5M5 5h14v14`} stroke={`currentColor`} strokeWidth={`1.7`} /></svg>;
+export const PlayIcon = ({ size = 20, className }: IconProps) => <svg width={size} height={size} className={className} viewBox={`0 0 24 24`} fill={`currentColor`} aria-hidden={`true`}><path d={`m8 5 12 7-12 7z`} /></svg>;
+export const SpotifyIcon = ({ size = 23, className }: IconProps) => <svg width={size} height={size} className={className} viewBox={`0 0 24 24`} aria-hidden={`true`}><circle cx={`12`} cy={`12`} r={`11`} fill={`currentColor`} /><g fill={`none`} stroke={`var(--icon-cutout, #090a09)`} strokeLinecap={`round`}><path d={`M6 8.7c4.2-1.1 8.5-.7 12 1.1`} strokeWidth={`1.8`} /><path d={`M6.8 12.1c3.7-.9 7.2-.5 10.2 1`} strokeWidth={`1.6`} /><path d={`M7.5 15.3c3-.7 5.8-.3 8.2.8`} strokeWidth={`1.4`} /></g></svg>;
+export const BrandMark = ({ size = 37, className }: IconProps) => <svg width={size} height={size} className={className} viewBox={`0 0 40 40`} fill={`none`} aria-hidden={`true`}><path d={`M3 4h8v13L26 4h11L19 20l18 16H25L11 23v13H3z`} fill={`currentColor`} /><path d={`M30 0h7v3h-7z`} fill={`#e84939`} /></svg>;

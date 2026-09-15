@@ -128,3 +128,10 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Expo And Local Migration Backup
+.expo/
+.legacy-template/
+android/
+ios/
+web-build/

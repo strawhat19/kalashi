@@ -1,0 +1,16 @@
+{
+  "expo": {
+    "name": "Kalashi Music",
+    "slug": "kalashi-music",
+    "scheme": "kalashi",
+    "icon": "./assets/brand/icon.png",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "splash": { "image": "./assets/brand/icon.png", "resizeMode": "contain", "backgroundColor": "#090a09" },
+    "plugins": ["expo-router", "expo-font"],
+    "ios": { "supportsTablet": true, "bundleIdentifier": "com.kalashi.music" },
+    "android": { "package": "com.kalashi.music" },
+    "web": { "bundler": "metro", "output": "static", "favicon": "./public/favicon.png" }
+  }
+}
