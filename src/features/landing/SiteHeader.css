@@ -61,7 +61,7 @@
 .site-header .header-spotify-border { flex-shrink: 0; }
 /* Keep the strip compact within the Anton wordmark's top whitespace. */
 .site-header__audio-marquee { --audio-marquee-height: clamp(8.5px, calc(2.1vw - 4.7px), 32px); position: absolute; top: 100%; right: 0; left: 0; }
-.site-header--sticky .site-header__audio-marquee { background: var(--bg); }
+/* .site-header--sticky .site-header__audio-marquee { background: var(--bg); } */
 
 @media (max-width: 1000px) {
   .kalashi-site .site-header { gap: 16px; }
