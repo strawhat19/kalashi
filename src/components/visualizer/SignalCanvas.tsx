@@ -27,6 +27,9 @@ const createAmbientFrame = (count: number, phase: number): VisualFrame => ({
 const SignalCanvas = ({ signal, active, compact, settings, audioPlaying, presentation = `monitor`, showMark = true }: SignalCanvasProps) => {
   const mini = presentation === `mini`;
   const monitor = presentation === `monitor`;
+  const fullWidthWaveform = monitor && settings.mode === `waveform`;
+  const waveformInset = fullWidthWaveform ? 0 : 24;
+  const waveformWidth = 1000 - waveformInset * 2;
   const phaseRef = useRef(0);
   const smoothRef = useRef<number[]>([]);
   const { visible, canvasRef } = useVisualizerVisibility();
@@ -72,14 +75,14 @@ const SignalCanvas = ({ signal, active, compact, settings, audioPlaying, present
   }, [active, signal, visible, audioPlaying, settings.speed, settings.density]);
 
   const linePath = frame.waveform.map((sample, index) => {
-    const x = 24 + index / Math.max(1, frame.waveform.length - 1) * 952;
+    const x = waveformInset + index / Math.max(1, frame.waveform.length - 1) * waveformWidth;
     const y = 160 + sample * 95 * settings.intensity;
     return `${index === 0 ? `M` : `L`} ${x.toFixed(1)} ${Math.max(18, Math.min(302, y)).toFixed(1)}`;
   }).join(` `);
 
   return (
     <View ref={canvasRef} accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={[styles.canvas, compact && styles.compact, !monitor && styles.embedded]}>
-      <Svg width="100%" height="100%" viewBox={mini ? `380 40 240 240` : `0 0 1000 320`} preserveAspectRatio="xMidYMid meet">
+      <Svg width="100%" height="100%" viewBox={mini ? `380 40 240 240` : `0 0 1000 320`} preserveAspectRatio={fullWidthWaveform ? `none` : `xMidYMid meet`}>
         {monitor && (
           <>
             {Array.from({ length: 21 }, (_, index) => (
@@ -95,7 +98,7 @@ const SignalCanvas = ({ signal, active, compact, settings, audioPlaying, present
         {settings.mode === `waveform` ? (
           <>
             {frame.spectrum.map((sample, index) => {
-              const x = 24 + index / Math.max(1, frame.spectrum.length - 1) * 952;
+              const x = waveformInset + index / Math.max(1, frame.spectrum.length - 1) * waveformWidth;
               const height = Math.min(268, Math.max(3, sample * 190 * settings.intensity));
               return <Rect key={`bar-${index}`} x={x - 1.5} y={160 - height / 2} width={3} height={height} fill={visualizerConfig.accent} opacity={0.18} />;
             })}

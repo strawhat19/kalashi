@@ -59,7 +59,7 @@ const SiteHeader = ({ ready, visualizerState, sticky = headerConfig.sticky }: Si
       <a href={`#sound-lab`} onClick={() => setMenuOpen(false)}>{`Sound Lab`}<span className={`nav-plus`}>{`+`}</span></a>
       <a href={`#story`} onClick={() => setMenuOpen(false)}>{`The Story`}</a>
     </nav>
-    <AudioBorder className={`header-spotify-border`} state={visualizerState} ready={ready} amplitude={5} gap={1}>
+    <AudioBorder className={`header-spotify-border`} state={visualizerState} ready={ready} amplitude={5}>
       <a className={`header-spotify`} href={artist.spotifyUrl} aria-label={`Kalashi on Spotify`} target={`_blank`} rel={`noopener noreferrer`}><SpotifyIcon size={19} /><span>{`Spotify`}</span><ArrowIcon size={14} /></a>
     </AudioBorder>
     <button className={`menu-toggle`} aria-label={menuOpen ? `Close navigation` : `Open navigation`} aria-expanded={menuOpen} aria-controls={`main-navigation`} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? `Close −` : `Menu +`}</button>

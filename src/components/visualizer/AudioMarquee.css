@@ -1,4 +1,5 @@
 .audio-marquee { height: var(--audio-marquee-height, 26px); overflow: hidden; color: var(--green, #b1f750); pointer-events: none; }
 .audio-marquee__canvas { display: block; overflow: hidden; }
 .audio-marquee__pattern { fill: currentColor; }
-.audio-marquee__bar { opacity: .95; }
+/* Paint a larger black silhouette behind each animated colored bar. */
+.audio-marquee__bar { fill-opacity: .95; stroke: #000; stroke-width: 2px; paint-order: stroke fill; }

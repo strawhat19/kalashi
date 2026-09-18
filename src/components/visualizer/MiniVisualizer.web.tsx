@@ -1,3 +1,4 @@
+import './MiniVisualizer.css';
 import SignalCanvas from './SignalCanvas';
 import type { AudioVisualizerState } from './audio.types';
 import { miniVisualizerSettings } from '../../config/visualizer';

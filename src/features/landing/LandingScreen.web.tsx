@@ -8,9 +8,11 @@ import SplitText from '../../components/motion/SplitText.web';
 import ScrollMarquee from '../../components/motion/ScrollMarquee.web';
 import { PageIntroContext } from '../../components/motion/PageIntroContext';
 import AudioVisualizer from '../../components/visualizer/AudioVisualizer';
+import AudioBorder from '../../components/visualizer/AudioBorder.web';
+import MiniVisualizer from '../../components/visualizer/MiniVisualizer.web';
 import type { AudioVisualizerState } from '../../components/visualizer/audio.types';
 import { scrollToAnchor } from '../../components/motion/scrollToAnchor.web';
-import { ArrowIcon, OrbitBrandMark, PlayIcon, SpotifyIcon } from '../../components/Icons.web';
+import { ArrowIcon, PlayIcon, SpotifyIcon } from '../../components/Icons.web';
 
 const LandingScreen = () => {
   const introReady = useContext(PageIntroContext);
@@ -44,13 +46,34 @@ const LandingScreen = () => {
 
       <section id={`music`} className={`music-section section-shell`} aria-labelledby={`music-title`}>
         <div className={`section-topline`}><span>{`01 / THE MUSIC`}</span><span>{`PRESS PLAY. STAY A WHILE.`}</span></div>
-        <div className={`section-heading`}><h2 id={`music-title`}><SplitText text={`STRAIGHT FROM`} /><br /><span className={`muted-text`}><SplitText text={`MY WORLD.`} delay={100} /></span></h2><a className={`text-link`} href={artist.spotifyUrl} target={`_blank`} rel={`noopener noreferrer`}>{`Full discography`}<ArrowIcon /></a></div>
+        <div className={`section-heading`}>
+          <h2 id={`music-title`}><SplitText text={`STRAIGHT FROM`} /><br /><span className={`muted-text`}><SplitText text={`MY WORLD.`} delay={100} /></span></h2>
+          <AudioBorder className={`discography-border`} state={visualizerState} ready={introReady} amplitude={7}>
+            <a className={`signal-pill`} href={artist.spotifyUrl} target={`_blank`} rel={`noopener noreferrer`}>{`Full discography`}<ArrowIcon /></a>
+          </AudioBorder>
+        </div>
         <div className={`release-grid`}>{releases.map((item, index) => <article className={`release-card`} key={item.title}>
-          <button className={`release-artwork`} aria-label={`Load ${item.title} in the Spotify player`} onClick={() => listen(index)}><img src={item.webArtwork} width={640} height={640} loading={`lazy`} alt={`${item.title} ${item.type.toLowerCase()} cover`} /><span className={`release-number`}>{`0${index + 1}`}</span><span className={`release-play`}><PlayIcon size={25} /></span></button>
-          <div className={`release-details`}><div><p>{`${item.type.toUpperCase()} / ${item.year}`}</p><h3><a href={item.spotifyUrl} target={`_blank`} rel={`noopener noreferrer`}>{item.title}</a></h3></div><a className={`release-spotify`} href={item.spotifyUrl} target={`_blank`} rel={`noopener noreferrer`} aria-label={`Open ${item.title} on Spotify`}><ArrowIcon /></a></div>
+          <button className={`release-artwork`} aria-label={`Load ${item.title} in the Spotify player`} onClick={() => listen(index)}>
+            <img src={item.webArtwork} width={640} height={640} loading={`lazy`} alt={`${item.title} ${item.type.toLowerCase()} cover`} />
+            <span className={`release-number`}>{`0${index + 1}`}</span>
+            <AudioBorder as={`span`} className={`release-play-border`} state={visualizerState} ready={introReady} amplitude={4.5} speed={1 + index * 0.12}>
+              <span className={`release-play`}><PlayIcon size={25} /></span>
+            </AudioBorder>
+          </button>
+          <div className={`release-details`}>
+            <div><p>{`${item.type.toUpperCase()} / ${item.year}`}</p><h3><a href={item.spotifyUrl} target={`_blank`} rel={`noopener noreferrer`}>{item.title}</a></h3></div>
+            <AudioBorder className={`release-spotify-border`} state={visualizerState} ready={introReady} amplitude={5} speed={1 + index * 0.12}>
+              <a className={`release-spotify`} href={item.spotifyUrl} target={`_blank`} rel={`noopener noreferrer`} aria-label={`Open ${item.title} on Spotify`}><ArrowIcon /></a>
+            </AudioBorder>
+          </div>
         </article>)}</div>
         <div id={`listen`} className={`spotify-player`} ref={player}>
-          <div className={`player-heading`}><span><SpotifyIcon size={20} />{release ? `ON ROTATION / ${release.title.toUpperCase()}` : `TUNE IN / KALASHI`}</span><a href={release?.spotifyUrl ?? artist.spotifyUrl} target={`_blank`} rel={`noopener noreferrer`}>{`Open Spotify`}<ArrowIcon size={14} /></a></div>
+          <div className={`player-heading`}>
+            <span><SpotifyIcon size={20} />{release ? `ON ROTATION / ${release.title.toUpperCase()}` : `TUNE IN / KALASHI`}</span>
+            <AudioBorder className={`player-link-border`} state={visualizerState} ready={introReady} amplitude={4.5}>
+              <a className={`signal-pill signal-pill--small`} href={release?.spotifyUrl ?? artist.spotifyUrl} target={`_blank`} rel={`noopener noreferrer`}>{`Open Spotify`}<ArrowIcon size={14} /></a>
+            </AudioBorder>
+          </div>
           <div className={`iframe-shell`}>{!playerLoaded ? <p className={`player-loading`} role={`status`}>{`Connecting to Spotify…`}</p> : null}<iframe key={playerUrl} src={playerUrl} width={`100%`} height={352} title={`Spotify player — ${release?.title ?? `Kalashi`}`} loading={`lazy`} allow={`autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture`} onLoad={() => setPlayerLoaded(true)} /></div>
           <p className={`player-note`}>{`Playback is provided by Spotify. To visualize music playing here, use Sync site audio in Sound Lab. If the player is unavailable, open Spotify above.`}</p>
         </div>
@@ -65,15 +88,35 @@ const LandingScreen = () => {
       <section id={`story`} className={`story-section section-shell`} aria-labelledby={`story-title`}>
         <div className={`section-topline`}><span>{`03 / THE ROOTS`}</span><span>{`TWO WORLDS. ONE VOICE.`}</span></div>
         <div className={`story-grid`}><div className={`story-coordinate`}><span>{`THE ORIGIN`}</span><div>{`BD`}<span>{`↗`}</span>{`ATL`}</div><p>{`23.6850° N / 90.3563° E`}<br />{`33.7490° N / 84.3880° W`}</p><div className={`flag-marks`}><span className={`bangladesh-mark`} /><span>{`BANGLADESH-BORN`}<br />{`ATLANTA-BASED`}</span></div></div>
-          <div className={`story-copy`}><h2 id={`story-title`}><SplitText text={`DIFFERENT ROOTS.`} /><br /><span className={`muted-text`}><SplitText text={`SAME HUNGER.`} delay={100} /></span></h2><p>{`Born in Bangladesh. Making noise in Atlanta. Kalashi brings two worlds into one sound — with the freedom to go wherever the next feeling takes him.`}</p><p>{`Baritone vocals. Sharp wordplay. A little hyperpop in the DNA. Music for the ones who never fit into a single box.`}</p><a className={`text-link`} href={artist.spotifyUrl} target={`_blank`} rel={`noopener noreferrer`}>{`Step into my world`}<ArrowIcon /></a></div></div>
+          <div className={`story-copy`}><h2 id={`story-title`}><SplitText text={`DIFFERENT ROOTS.`} /><br /><span className={`muted-text`}><SplitText text={`SAME HUNGER.`} delay={100} /></span></h2><p>{`Born in Bangladesh. Making noise in Atlanta. Kalashi brings two worlds into one sound — with the freedom to go wherever the next feeling takes him.`}</p><p>{`Baritone vocals. Sharp wordplay. A little hyperpop in the DNA. Music for the ones who never fit into a single box.`}</p>
+            <AudioBorder className={`story-link-border`} state={visualizerState} ready={introReady} amplitude={7} speed={0.85}>
+              <a className={`signal-pill`} href={artist.spotifyUrl} target={`_blank`} rel={`noopener noreferrer`}>{`Step into my world`}<ArrowIcon /></a>
+            </AudioBorder>
+          </div>
+        </div>
       </section>
 
       </div>
 
-      <section className={`closing-section`} aria-labelledby={`closing-title`}><div><span className={`micro-label`}>{`THE NEXT CHAPTER IS ALWAYS LOADING`}</span><h2 id={`closing-title`}><SplitText text={`STAY ON MY`} /><br /><SplitText text={`FREQUENCY.`} delay={100} /></h2></div><a href={artist.spotifyUrl} className={`closing-link`} target={`_blank`} rel={`noopener noreferrer`}><SpotifyIcon size={30} /><span>{`Follow on`}<strong>{`Spotify`}</strong></span><ArrowIcon size={34} /></a></section>
+      <section className={`closing-section`} aria-labelledby={`closing-title`}>
+        <div><span className={`micro-label`}>{`THE NEXT CHAPTER IS ALWAYS LOADING`}</span><h2 id={`closing-title`}><SplitText text={`STAY ON MY`} /><br /><SplitText text={`FREQUENCY.`} delay={100} /></h2></div>
+        <AudioBorder className={`closing-link-border`} state={visualizerState} ready={introReady} amplitude={10} color={`#090a09`} accentColor={`#090a09`}>
+          <a href={artist.spotifyUrl} className={`closing-link`} target={`_blank`} rel={`noopener noreferrer`}><SpotifyIcon size={30} /><span>{`Follow on`}<strong>{`Spotify`}</strong></span><ArrowIcon size={34} /></a>
+        </AudioBorder>
+      </section>
     </main>
 
-    <footer className={`site-footer`}><a className={`brand footer-brand`} href={`#home`} aria-label={`Kalashi Music back to top`}><OrbitBrandMark size={44} /><span>{`KALASHI`}</span></a><span>{`© ${new Date().getFullYear()} KALASHI MUSIC`}</span><a href={`#home`}>{`BACK TO THE TOP`}<span>{`↑`}</span></a></footer>
+    <footer className={`site-footer`}>
+      <a className={`brand footer-brand`} href={`#home`} aria-label={`Kalashi Music back to top`}>
+        <MiniVisualizer state={visualizerState} ready={introReady} />
+        <span>{`KALASHI`}</span>
+      </a>
+      <span className={`footer-credits`}>
+        <a href={`https://piratechs.com/`} target={`_blank`} rel={`noopener noreferrer`}>{`Piratechs`}<ArrowIcon size={12} /></a>
+        <span>{`© ${new Date().getFullYear()} KALASHI MUSIC`}</span>
+      </span>
+      <a href={`#home`}>{`BACK TO THE TOP`}<span>{`↑`}</span></a>
+    </footer>
   </div>;
 };
 

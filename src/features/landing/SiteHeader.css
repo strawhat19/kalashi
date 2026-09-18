@@ -32,36 +32,9 @@
   gap: 9px;
 }
 
-.site-header .mini-visualizer {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 88px;
-  height: 88px;
-  flex: 0 0 88px;
-  color: var(--green);
-  pointer-events: none;
-}
-
-.site-header .mini-visualizer__orbit {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: radial-gradient(circle, #b1f7500c, transparent 70%);
-}
-
-.site-header .mini-visualizer__mark {
-  position: relative;
-  width: 20px;
-  height: 20px;
-}
-
 .site-header .header-spotify-border { flex-shrink: 0; }
 /* Keep the strip compact within the Anton wordmark's top whitespace. */
 .site-header__audio-marquee { --audio-marquee-height: clamp(8.5px, calc(2.1vw - 4.7px), 32px); position: absolute; top: 100%; right: 0; left: 0; }
-/* .site-header--sticky .site-header__audio-marquee { background: var(--bg); } */
 
 @media (max-width: 1000px) {
   .kalashi-site .site-header { gap: 16px; }
@@ -77,8 +50,7 @@
   }
 
   .kalashi-site .site-header::after { left: 5%; right: 5%; }
-  .site-header .mini-visualizer { width: 68px; height: 68px; flex-basis: 68px; }
-  .site-header .mini-visualizer__mark { width: 18px; height: 18px; }
+  .site-header .mini-visualizer { --mini-visualizer-size: 68px; --mini-visualizer-mark-size: 18px; }
   .site-header .main-nav.is-open { top: calc(100% - 1px); }
   .site-header .menu-toggle { flex-shrink: 0; white-space: nowrap; }
   .site-header .header-spotify-border { margin-left: auto; }

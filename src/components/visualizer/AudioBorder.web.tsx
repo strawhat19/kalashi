@@ -5,12 +5,14 @@ import { visualizerConfig } from '../../config/visualizer';
 
 export type AudioBorderProps = {
   children: ReactNode;
+  as?: `div` | `span`;
   state?: AudioVisualizerState;
   ready?: boolean;
   /** Corner radius in pixels. The default follows pill-shaped buttons. */
   radius?: number;
   /** Maximum outward pulse in pixels; does not take up layout space. */
   amplitude?: number;
+  /** Optional outward spacing; bars touch the element by default. */
   gap?: number;
   speed?: number;
   color?: string;
@@ -22,8 +24,8 @@ export type AudioBorderProps = {
 type BorderPoint = { x: number; y: number; nx: number; ny: number };
 
 /** Orbit-style spectrum bars radiating outward behind a button, link, or element. */
-const AudioBorder = ({ children, state, ready = true, radius = 999, amplitude = 6, gap = 2, speed = 1, color = visualizerConfig.accent, accentColor = visualizerConfig.alert, className = ``, style }: AudioBorderProps) => {
-  const hostRef = useRef<HTMLDivElement>(null);
+const AudioBorder = ({ children, as: Host = `div`, state, ready = true, radius = 999, amplitude = 6, gap = 0, speed = 1, color = visualizerConfig.accent, accentColor = visualizerConfig.alert, className = ``, style }: AudioBorderProps) => {
+  const hostRef = useRef<HTMLDivElement | HTMLSpanElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const outlineRef = useRef<SVGRectElement>(null);
   const raysRef = useRef<SVGPathElement>(null);
@@ -49,6 +51,8 @@ const AudioBorder = ({ children, state, ready = true, radius = 999, amplitude = 
     let frame: number | undefined;
     let previousTime = 0;
     let inView = typeof IntersectionObserver === `undefined`;
+    // Start just under the element edge to prevent a seam from antialiasing.
+    const originInset = spacing === 0 ? 0.75 : 0;
     const canAnimate = () => ready && active && inView && !document.hidden && !preference.matches;
 
     const paint = () => {
@@ -79,7 +83,7 @@ const AudioBorder = ({ children, state, ready = true, radius = 999, amplitude = 
         const x = point.x + point.nx * distance;
         const y = point.y + point.ny * distance;
         if (index !== accentIndices[0] && index !== accentIndices[1]) {
-          ticks.push(`M${point.x.toFixed(2)},${point.y.toFixed(2)}L${x.toFixed(2)},${y.toFixed(2)}`);
+          ticks.push(`M${(point.x - point.nx * originInset).toFixed(2)},${(point.y - point.ny * originInset).toFixed(2)}L${x.toFixed(2)},${y.toFixed(2)}`);
         }
       });
       accentCursors.forEach((cursor) => {
@@ -96,7 +100,7 @@ const AudioBorder = ({ children, state, ready = true, radius = 999, amplitude = 
         const ny = point.ny + (next.ny - point.ny) * fraction;
         const magnitude = Math.hypot(nx, ny) || 1;
         const distance = distances[index] + (distances[nextIndex] - distances[index]) * fraction;
-        accentTicks.push(`M${x.toFixed(2)},${y.toFixed(2)}L${(x + nx / magnitude * distance).toFixed(2)},${(y + ny / magnitude * distance).toFixed(2)}`);
+        accentTicks.push(`M${(x - nx / magnitude * originInset).toFixed(2)},${(y - ny / magnitude * originInset).toFixed(2)}L${(x + nx / magnitude * distance).toFixed(2)},${(y + ny / magnitude * distance).toFixed(2)}`);
       });
       rays.setAttribute(`d`, ticks.join(` `));
       accentRays.setAttribute(`d`, accentTicks.join(` `));
@@ -162,16 +166,16 @@ const AudioBorder = ({ children, state, ready = true, radius = 999, amplitude = 
       preference.removeEventListener(`change`, updatePlayback);
       document.removeEventListener(`visibilitychange`, updatePlayback);
     };
-  }, [signal, audioPlaying, active, ready, radius, gain, spacing, speed, bleed]);
+  }, [Host, signal, audioPlaying, active, ready, radius, gain, spacing, speed, bleed]);
 
-  return <div ref={hostRef} className={`audio-border ${className}`.trim()} style={{ ...style, [`--audio-border-bleed`]: `${bleed}px`, [`--audio-border-color`]: color, [`--audio-border-accent`]: accentColor } as CSSProperties}>
+  return <Host ref={(element: HTMLDivElement | HTMLSpanElement | null) => { hostRef.current = element; }} className={`audio-border ${className}`.trim()} style={{ ...style, [`--audio-border-bleed`]: `${bleed}px`, [`--audio-border-color`]: color, [`--audio-border-accent`]: accentColor } as CSSProperties}>
     <svg ref={svgRef} className={`audio-border__canvas`} aria-hidden={`true`} focusable={`false`}>
       <rect ref={outlineRef} className={`audio-border__outline`} />
       <path ref={raysRef} className={`audio-border__rays`} />
       <path ref={accentRaysRef} className={`audio-border__rays audio-border__rays--accent`} />
     </svg>
     {children}
-  </div>;
+  </Host>;
 };
 
 export default AudioBorder;

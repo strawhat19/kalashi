@@ -165,7 +165,7 @@ const HeroSlider = ({ ready = true, onListen, visualizerState, autoplay = heroSl
           <div className={`eyebrow`}><span className={`line`} />{`eyebrow` in slide ? slide.eyebrow : `THIS IS MY FREQUENCY`}</div>
           <h2>{`firstLine` in slide ? <><SplitText text={slide.firstLine} ready={ready && active} delay={80} /><br /><span className={`accent-text`}><SplitText text={slide.secondLine} ready={ready && active} delay={150} /></span></> : <><SplitText text={`A WORLD`} ready={ready && active} delay={80} /><br /><SplitText text={`IN MY `} ready={ready && active} delay={150} /><span className={`accent-text`}><SplitText text={`SOUND.`} ready={ready && active} delay={240} /></span></>}</h2>
           <p>{`description` in slide ? slide.description : `Bangladesh roots. Atlanta energy.`}<br />{`detail` in slide ? slide.detail : `No boxes. No borders. Just Kalashi.`}</p>
-          <AudioBorder className={`hero-listen-border`} state={visualizerState} ready={ready && active} radius={999} amplitude={6.5} gap={1}>
+          <AudioBorder className={`hero-listen-border`} state={visualizerState} ready={ready && active} radius={999} amplitude={6.5}>
             <a className={`button button-green`} href={index === 0 ? artist.spotifyUrl : currentRelease.spotifyUrl} target={`_blank`} rel={`noopener noreferrer`}><SpotifyIcon />{`Listen on Spotify`}<ArrowIcon size={18} /></a>
           </AudioBorder>
           <a className={`explore-link`} href={`#music`}>{`Explore the music`}<span>{`↓`}</span></a>

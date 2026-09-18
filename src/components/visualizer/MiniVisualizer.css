@@ -1,0 +1,25 @@
+.mini-visualizer {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--mini-visualizer-size, 88px);
+  height: var(--mini-visualizer-size, 88px);
+  flex: 0 0 var(--mini-visualizer-size, 88px);
+  color: var(--green);
+  pointer-events: none;
+}
+
+.mini-visualizer__orbit {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #b1f7500c, transparent 70%);
+}
+
+.mini-visualizer__mark {
+  position: relative;
+  width: var(--mini-visualizer-mark-size, 20px);
+  height: var(--mini-visualizer-mark-size, 20px);
+}

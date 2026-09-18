@@ -1,6 +1,6 @@
 .audio-border { position: relative; display: inline-grid; isolation: isolate; vertical-align: middle; }
 .audio-border__canvas { position: absolute; z-index: -1; inset: calc(-1 * var(--audio-border-bleed)); width: calc(100% + var(--audio-border-bleed) * 2); height: calc(100% + var(--audio-border-bleed) * 2); overflow: visible; pointer-events: none; color: var(--audio-border-color); }
 .audio-border__outline, .audio-border__rays { fill: none; stroke: currentColor; stroke-linejoin: round; stroke-linecap: round; }
-.audio-border__outline { stroke-width: .6; opacity: .16; }
+.audio-border__outline { opacity: 0; }
 .audio-border__rays { stroke-width: 1.65; opacity: .95; }
 .audio-border__rays--accent { stroke: var(--audio-border-accent); }
