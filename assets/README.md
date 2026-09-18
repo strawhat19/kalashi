@@ -16,7 +16,7 @@ Anton and Space Grotesk come from [Google Fonts](https://github.com/google/fonts
 The official mark combines the original K letterform with a static audio orbit, using the site's lime (`#b1f750`), red (`#e84939`), and charcoal (`#090a09`) palette. The K paths remain unchanged.
 
 - `brand/orbit-mark.svg` is the transparent vector master, matching the reusable web `OrbitBrandMark` component in `src/components/Icons.web.tsx`. The centered K is scaled to 2.8× its original 40-unit drawing, with the inner orbit rings spaced to clear its corners.
-- `brand/icon.svg` adds an opaque dark square background; `brand/icon.png` is its 1024×1024 raster export used by the Expo app icon and splash configuration. The operating system applies its own app-icon corner mask.
-- `public/favicon.svg` is the small-size variant, with the same enlarged K and fewer, heavier orbit rays so it remains legible in browser tabs. `public/favicon.png` is its 64×64 raster export, used by Expo to generate the browser favicon.
+- `brand/icon.svg` uses the same transparent orbit mark; `brand/icon.png` is its transparent 1024×1024 raster export used by the Expo app icon and splash configuration. The operating system applies its own app-icon corner mask.
+- `public/favicon.svg` is the small-size variant, with the same enlarged K and fewer, heavier orbit rays so it remains legible in browser tabs. `public/favicon.png` is its transparent 64×64 raster export, used by Expo to generate the browser favicon.
 
 Raster exports are rendered directly from their corresponding SVG masters. Keep the matching SVG, PNG, and React vector paths in sync when updating the mark. The animated header uses the same original K with a live audio orbit.
