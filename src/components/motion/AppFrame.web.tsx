@@ -1,5 +1,6 @@
 import './AppFrame.css';
 import { usePathname } from 'expo-router';
+import { Analytics } from '@vercel/analytics/react';
 import PageLoader from './PageLoader.web';
 import { PageIntroContext } from './PageIntroContext';
 import { useState, useCallback, useLayoutEffect, type PropsWithChildren } from 'react';
@@ -22,6 +23,7 @@ const AppFrame = ({ ready, children }: PropsWithChildren<{ ready: boolean }>) =>
 
   return <PageIntroContext.Provider value={revealed}><div className={`web-app-frame`}>
     {children}
+    <Analytics />
     {!complete ? <PageLoader key={pathname} ready={ready} onReveal={reveal} onComplete={finish} /> : null}
   </div></PageIntroContext.Provider>;
 };
