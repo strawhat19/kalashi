@@ -1,3 +1,6 @@
+import { LocalWorkspaceProvider } from '../shared/account/LocalWorkspaceContext';
+import { LibraryProvider } from '../shared/account/LibraryContext';
+import { AccountNavigationProvider } from '../shared/account/NavigationContext';
 import { View } from 'react-native';
 import { Slot } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -10,7 +13,7 @@ const RootLayout = () => {
   const fontsReady = useBrandFonts();
 
   return <SafeAreaProvider><StatusBar style={`light`} /><View style={{ flex: 1, backgroundColor: colors.black }}>
-    <AppFrame ready={fontsReady}><Slot /></AppFrame>
+    <LibraryProvider><LocalWorkspaceProvider><AccountNavigationProvider><AppFrame ready={fontsReady}><Slot /></AppFrame></AccountNavigationProvider></LocalWorkspaceProvider></LibraryProvider>
   </View></SafeAreaProvider>;
 };
 

@@ -1,3 +1,4 @@
+import { Link } from 'expo-router';
 import { useRef } from 'react';
 import Svg, { Path } from 'react-native-svg';
 import { colors, fonts } from '../../theme/tokens';
@@ -72,6 +73,10 @@ export default function LandingScreen() {
             </View>
           </View>
           <View style={styles.heroBottom}><Text style={styles.heroCaption}>A little out of place.{`\n`}Exactly where he belongs.</Text><Text style={styles.scrollCue}>TURN IT UP{`\n`}↓</Text></View>
+          <View nativeID={`native-account-links`} style={styles.sectionNav}>
+            <Link href={`/library`} style={styles.navLabel}>{`♡ My library`}</Link>
+            <Link href={`/sign-in`} style={styles.navLabel}>{`◉ Account`}</Link>
+          </View>
           <View style={styles.sectionNav}>
             {([{ id: `music`, label: `Music` }, { id: `about`, label: `The Artist` }, { id: `sound`, label: `Sound Lab` }] as const).map(item => (
               <Pressable key={item.id} onPress={() => navigate(item.id)} accessibilityRole="button" accessibilityLabel={`Scroll To ${item.label}`} style={({ pressed }) => [styles.navLink, pressed && styles.pressed]}><Text style={styles.navLabel}>{item.label}</Text><Text style={styles.navArrow}>↘</Text></Pressable>

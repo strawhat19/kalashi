@@ -1,4 +1,5 @@
 import './SiteHeader.css';
+import { Link } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { ArrowIcon, SpotifyIcon } from '../../components/Icons.web';
 import MiniVisualizer from '../../components/visualizer/MiniVisualizer.web';
@@ -58,6 +59,8 @@ const SiteHeader = ({ ready, visualizerState, sticky = headerConfig.sticky }: Si
       <a href={`#music`} onClick={() => setMenuOpen(false)}>{`The Music`}</a>
       <a href={`#sound-lab`} onClick={() => setMenuOpen(false)}>{`Sound Lab`}<span className={`nav-plus`}>{`+`}</span></a>
       <a href={`#story`} onClick={() => setMenuOpen(false)}>{`The Story`}</a>
+      <Link id={`header-library-link`} className={`header-library-link`} href={`/library`} onPress={() => setMenuOpen(false)}>{`♡ My library`}</Link>
+      <Link id={`header-account-link`} className={`header-account-link`} href={`/sign-in`} onPress={() => setMenuOpen(false)}>{`◉ Account`}</Link>
     </nav>
     <AudioBorder className={`header-spotify-border`} state={visualizerState} ready={ready} amplitude={5}>
       <a className={`header-spotify`} href={artist.spotifyUrl} aria-label={`Kalashi on Spotify`} target={`_blank`} rel={`noopener noreferrer`}><SpotifyIcon size={19} /><span>{`Spotify`}</span><ArrowIcon size={14} /></a>

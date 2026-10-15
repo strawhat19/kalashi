@@ -23,7 +23,7 @@ const AppFrame = ({ ready, children }: PropsWithChildren<{ ready: boolean }>) =>
 
   return <PageIntroContext.Provider value={revealed}><div className={`web-app-frame`}>
     {children}
-    <Analytics />
+    {pathname === `/` && <Analytics />}
     {!complete ? <PageLoader key={pathname} ready={ready} onReveal={reveal} onComplete={finish} /> : null}
   </div></PageIntroContext.Provider>;
 };

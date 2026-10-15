@@ -1,3 +1,4 @@
+import { Link } from 'expo-router';
 import './LandingScreen.css';
 import Head from 'expo-router/head';
 import HeroSlider from './HeroSlider.web';
@@ -107,6 +108,11 @@ const LandingScreen = () => {
     </main>
 
     <footer className={`site-footer`}>
+      <Link id={`footer-about-link`} className={`footer-about-link`} href={`/about`}>{`About ↗`}</Link>
+      <Link id={`footer-contact-link`} className={`footer-contact-link`} href={`/contact`}>{`Contact ↗`}</Link>
+      <Link id={`footer-terms-link`} className={`footer-terms-link`} href={`/terms`}>{`Terms ↗`}</Link>
+      <Link id={`footer-support-link`} className={`footer-support-link`} href={`/support`}>{`Help ↗`}</Link>
+      <Link id={`footer-privacy-link`} className={`footer-privacy-link`} href={`/privacy`}>{`Privacy ↗`}</Link>
       <a className={`brand footer-brand`} href={`#home`} aria-label={`Kalashi Music back to top`}>
         <MiniVisualizer state={visualizerState} ready={introReady} />
         <span>{`KALASHI`}</span>
