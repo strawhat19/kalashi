@@ -3,7 +3,9 @@ import './LandingScreen.css';
 import Head from 'expo-router/head';
 import HeroSlider from './HeroSlider.web';
 import SiteHeader from './SiteHeader.web';
+import PopularTracks from '../../components/PopularTracks';
 import { artist, releases } from '../../config/artist';
+import ReleaseHighlights from '../public/ReleaseHighlights';
 import { useRef, useState, useContext } from 'react';
 import SplitText from '../../components/motion/SplitText.web';
 import ScrollMarquee from '../../components/motion/ScrollMarquee.web';
@@ -53,6 +55,9 @@ const LandingScreen = () => {
             <a className={`signal-pill`} href={artist.spotifyUrl} target={`_blank`} rel={`noopener noreferrer`}>{`Full discography`}<ArrowIcon /></a>
           </AudioBorder>
         </div>
+        <ReleaseHighlights id={`landing-latest-releases`} />
+        <PopularTracks id={`landing-popular-tracks`} />
+        <div id={`landing-catalog-heading`} className={`section-topline`}><span>{`MORE FROM KALASHI`}</span><span>{`SINGLES / ALBUMS`}</span></div>
         <div className={`release-grid`}>{releases.map((item, index) => <article className={`release-card`} key={item.title}>
           <button className={`release-artwork`} aria-label={`Load ${item.title} in the Spotify player`} onClick={() => listen(index)}>
             <img src={item.webArtwork} width={640} height={640} loading={`lazy`} alt={`${item.title} ${item.type.toLowerCase()} cover`} />

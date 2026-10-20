@@ -1,0 +1,28 @@
+.account-shell .record-mark { background: repeating-radial-gradient(circle at center, #0b0d0b 0 2px, #242820 3px, #0b0d0b 4px 7px) !important; }
+.account-shell .record-mark-groove { border-width: 1px !important; }
+.account-shell .record-mark-label { box-shadow: 0 0 0 10px #0b0d0b, 0 0 0 11px #34382f; }
+.account-shell .mixtape-art { position: relative; box-shadow: inset 0 0 0 5px #19141f; transition: transform 350ms cubic-bezier(.22, 1, .36, 1); }
+.account-shell .mixtape-art::before, .account-shell .mixtape-art::after { content: ''; position: absolute; bottom: 8px; width: 4px; height: 4px; border: 1px solid #78688c; border-radius: 50%; }
+.account-shell .mixtape-art::before { left: 9px; }
+.account-shell .mixtape-art::after { right: 9px; }
+.account-shell .mixtape-label { background-image: repeating-linear-gradient(0deg, transparent 0 21px, #30263e20 22px 23px); }
+.account-shell .mixtape-reel { background: repeating-conic-gradient(#c4b0f0 0deg 12deg, #17121e 12deg 60deg) !important; }
+.account-shell .admission-ticket { position: relative; height: 100%; min-width: 0; overflow: hidden; }
+.account-shell .admission-ticket::before, .account-shell .admission-ticket::after { content: ''; position: absolute; bottom: 88px; width: 28px; height: 28px; border-radius: 50%; background: #090a09; }
+.account-shell .admission-ticket::before { left: -14px; }
+.account-shell .admission-ticket::after { right: -14px; }
+.account-shell .admission-slogan { font-size: clamp(50px, 6.5vw, 104px) !important; line-height: .99 !important; }
+.account-shell .admission-stub { flex-wrap: nowrap !important; }
+.account-shell .listener-passport { position: relative; overflow: hidden; background-image: repeating-linear-gradient(115deg, transparent 0 14px, #5b594e08 15px 16px); }
+.account-shell .listener-passport::after { content: 'K'; position: absolute; right: 18px; top: 30px; color: #5b594e0b; font: 220px/.9 Anton, Impact, sans-serif; pointer-events: none; }
+.account-shell .passport-body, .account-shell .passport-top, .account-shell .passport-signature { position: relative; z-index: 1; }
+.account-shell .passport-portrait { background-image: repeating-linear-gradient(0deg, transparent 0 3px, #5b594e10 3px 4px); }
+.account-shell .passport-name { overflow-wrap: anywhere; }
+.account-shell .account-patchbay { position: relative; background-image: radial-gradient(#385154 1px, transparent 1px); background-size: 12px 12px; }
+.account-shell .patchbay-channel { position: relative; }
+.account-shell .patchbay-port { box-shadow: 0 0 0 4px #0d1718, 0 0 0 5px #385154; }
+.account-shell .studio-door { position: relative; background-image: repeating-linear-gradient(90deg, transparent 0 7px, #d8cdb804 7px 8px); box-shadow: inset 0 0 0 8px #121110; }
+.account-shell .studio-door-number { letter-spacing: -.07em; }
+.account-shell .studio-door-handle { box-shadow: 0 5px 10px #0008; }
+@media (max-width: 650px) { .account-shell .admission-ticket { min-height: 390px !important; padding: 24px !important; } .account-shell .admission-slogan { font-size: 68px !important; } .account-shell .passport-body { gap: 18px !important; } }
+@media (prefers-reduced-motion: reduce) { .account-shell .mixtape-art { transition: none; } }

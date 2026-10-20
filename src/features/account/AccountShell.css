@@ -1,0 +1,99 @@
+.account-shell {
+  --account-gutter: clamp(18px, 2.4vw, 40px);
+  --account-gap: max(28px, var(--account-gutter));
+  display: grid;
+  grid-template-columns: var(--account-layout-width, 204px) minmax(0, 1fr);
+  column-gap: var(--account-gap);
+  min-height: calc(100dvh - var(--site-header-offset, 86px));
+  padding-right: var(--account-gutter);
+  transition: grid-template-columns 300ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.account-sidebar {
+  position: fixed;
+  z-index: 20;
+  top: var(--site-header-offset, 86px);
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  width: var(--account-layout-width, 204px);
+  height: calc(100dvh - var(--site-header-offset, 86px));
+  min-height: 0;
+  padding: 9px 8px 5px;
+  border-right: 1px solid var(--border);
+  background: #111510;
+  transition: width 300ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.account-sidebar__navigation-wrap { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; }
+.account-sidebar__navigation-wrap::-webkit-scrollbar { display: none; }
+.account-navigation { display: flex; flex-direction: column; gap: 24px; }
+.account-navigation__group { display: flex; flex-direction: column; gap: 8px; }
+.account-navigation__heading { margin: 0 0 1px !important; padding-inline: 10px; color: var(--muted); font-size: 9px; font-weight: 500; line-height: 1.3; letter-spacing: 1.5px; }
+.account-sidebar__link { display: flex; align-items: center; gap: 10px; min-height: 42px; padding: 11px 10px; border-radius: 8px; color: var(--white); font-size: 13px; line-height: 1.4; transition: color 200ms ease, background 200ms ease; }
+.account-sidebar__link > svg { flex-shrink: 0; color: var(--green); }
+.account-sidebar__link:hover { color: var(--green); background: #b1f75009; }
+.account-sidebar__link.is-active { color: var(--green); background: #b1f75012; }
+.account-sidebar__label { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.account-sidebar__bottom { display: flex; flex-direction: column; gap: 8px; margin-top: auto; padding-top: 18px; }
+.account-sidebar__notice { display: flex; align-items: flex-start; gap: 6px; padding-inline: 5px; color: var(--muted); font-size: 9px; line-height: 1.6; }
+.account-sidebar__notice-icon { flex-shrink: 0; }
+.account-sidebar__controls { display: flex; align-items: center; gap: 8px; min-height: 43px; padding-block: 4px; }
+.account-sidebar__identity { display: flex; flex: 1; align-items: center; gap: 8px; min-width: 0; min-height: 38px; padding: 4px 0; font-size: 11px; }
+.account-sidebar__avatar { display: grid; place-items: center; flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--green); color: var(--bg); font-family: Anton, Impact, sans-serif; font-size: 17px; }
+.account-sidebar__toggle { display: grid; place-items: center; flex-shrink: 0; width: 38px; height: 38px; padding: 0; border: 1px solid var(--border); border-radius: 7px; background: transparent; color: var(--white); transition: border-color 200ms ease, color 200ms ease; }
+.account-sidebar__toggle:hover { border-color: var(--green); color: var(--green); }
+.account-sidebar__toggle:disabled { opacity: .4; cursor: default; }
+.account-sidebar__toggle > svg { transition: transform 300ms cubic-bezier(.22, 1, .36, 1); }
+.account-shell.is-collapsed .account-sidebar__toggle > svg { transform: rotate(180deg); }
+.account-content { grid-column: 2; min-width: 0; padding: 32px 0 clamp(32px, 4vw, 56px); }
+.account-page-heading { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; margin-bottom: 32px; }
+.account-mode { color: var(--muted); font-size: 9px; line-height: 1.8; letter-spacing: 1.5px; }
+.account-title { color: var(--white); font-family: Anton, Impact, sans-serif; font-size: clamp(34px, 5vw, 56px); font-weight: 400; line-height: 1.15; letter-spacing: -.025em; }
+.account-description { max-width: 740px; color: var(--muted); font-size: 15px; line-height: 1.8; }
+.account-page-panels { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+.account-page-panels > * { min-width: 0; }
+.kalashi-account-site .shared-site-footer { margin-left: var(--account-rail-width, 0px); transition: margin-left 300ms cubic-bezier(.22, 1, .36, 1); }
+
+@media (min-width: 651px) {
+  .account-shell.is-collapsed .account-sidebar { padding-top: 8px; padding-bottom: 0; }
+  .account-shell.is-collapsed .account-navigation { gap: 12px; }
+  .account-shell.is-collapsed .account-navigation__group { gap: 4px; }
+  .account-shell.is-collapsed .account-navigation__heading { display: none; }
+  .account-shell.is-collapsed .account-sidebar__label,
+  .account-shell.is-collapsed .account-sidebar__notice-copy { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .account-shell.is-collapsed .account-sidebar__link { justify-content: center; min-height: 38px; padding: 8px 0; }
+  .account-shell.is-collapsed .account-sidebar__notice { justify-content: center; }
+  .account-shell.is-collapsed .account-sidebar__controls { flex-direction: column; }
+  .account-shell.is-collapsed .account-sidebar__identity { flex: none; justify-content: center; }
+}
+
+@media (max-width: 650px) {
+  .account-shell { display: flex; flex-direction: column; gap: 24px; padding: 24px var(--account-gutter) 0; }
+  .account-sidebar { position: static; width: 100%; height: auto; padding: 0 0 16px; border-right: 0; border-bottom: 1px solid var(--border); background: transparent; }
+  .account-sidebar__navigation-wrap { display: grid; grid-template-rows: 1fr; flex: none; overflow: hidden; opacity: 1; visibility: visible; transition: grid-template-rows 320ms cubic-bezier(.22, 1, .36, 1), opacity 240ms ease, visibility 0s; }
+  .account-shell.is-collapsed .account-sidebar__navigation-wrap { grid-template-rows: 0fr; opacity: 0; visibility: hidden; transition: grid-template-rows 320ms cubic-bezier(.22, 1, .36, 1), opacity 240ms ease, visibility 0s linear 320ms; }
+  .account-navigation { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; min-height: 0; overflow: hidden; }
+  .account-navigation__heading { padding-inline: 0; }
+  .account-sidebar__link { gap: 8px; padding-inline: 0; font-size: 12px; }
+  .account-sidebar__bottom { padding-top: 12px; }
+  .account-sidebar__notice { padding-inline: 0; }
+  .account-sidebar__identity { font-size: 12px; }
+  .account-sidebar__toggle > svg { transform: rotate(90deg); }
+  .account-shell.is-collapsed .account-sidebar__toggle > svg { transform: rotate(270deg); }
+  .account-content { padding-top: 0; }
+  .account-page-heading { gap: 16px; margin-bottom: 24px; }
+  .account-description { font-size: 14px; }
+  .kalashi-account-site .shared-site-footer { margin-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .account-shell,
+  .account-sidebar,
+  .account-sidebar__link,
+  .account-sidebar__toggle,
+  .account-sidebar__toggle > svg,
+  .account-sidebar__navigation-wrap,
+  .kalashi-account-site .shared-site-footer { transition: none; }
+}

@@ -1,0 +1,89 @@
+.catalog-page { max-width: 1800px; padding-top: 0; }
+.catalog-page .catalog-eyebrow { color: var(--green); font-size: 9px; line-height: 1.6; letter-spacing: 1.8px; }
+.catalog-page .catalog-hero { display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; min-height: 660px; padding: 55px 0 65px; gap: 3%; }
+.catalog-hero__copy { position: relative; z-index: 2; }
+.catalog-page .catalog-hero h1 { margin-top: 28px; font-size: clamp(64px, 8vw, 137px); line-height: .99; letter-spacing: -.035em; }
+.catalog-hero h1 > span { display: block; }
+.catalog-page .catalog-hero__description { max-width: 390px; margin-top: 26px; color: #adb4a3; font-size: 15px; line-height: 1.8; }
+.catalog-hero__links { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 30px; margin-top: 30px; }
+.catalog-page .catalog-button { display: inline-flex; align-items: center; justify-content: space-between; min-height: 52px; gap: 35px; padding: 15px 22px; color: var(--bg); background: var(--green); font-size: 12px; transition: background 220ms ease, transform 220ms ease; }
+.catalog-button:hover { background: #ccff8c; transform: translateY(-3px); }
+.catalog-edition { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 52px; color: var(--muted); font-size: 8px; letter-spacing: 1.4px; }
+.catalog-edition > span + span { padding-left: 24px; border-left: 1px solid var(--border); }
+.catalog-record-object { position: relative; min-width: 0; min-height: 520px; isolation: isolate; perspective: 1000px; }
+.catalog-record-object__grid { position: absolute; inset: 0 -8% 10%; z-index: -2; opacity: .35; background-image: linear-gradient(#b1f75017 1px, transparent 1px), linear-gradient(90deg, #b1f75017 1px, transparent 1px); background-size: 54px 54px; mask-image: radial-gradient(ellipse, #000 30%, transparent 70%); }
+.catalog-vinyl { position: absolute; top: 13%; right: -3%; width: 78%; aspect-ratio: 1; border: 1px solid #505747; border-radius: 50%; background: repeating-radial-gradient(circle, #11150f 0 2px, #272b21 3px, #11150f 4px 5px); box-shadow: 16px 24px 50px #0008; transform: rotate(14deg); transition: transform 800ms cubic-bezier(.2,.8,.2,1); }
+.catalog-vinyl::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: conic-gradient(transparent 0deg, #e3e6d81e 45deg, transparent 70deg 190deg, #e3e6d820 230deg, transparent 270deg); }
+.catalog-vinyl > img { position: absolute; inset: 33%; width: 34%; height: 34%; object-fit: cover; border-radius: 50%; filter: saturate(.7); }
+.catalog-vinyl > span { position: absolute; z-index: 1; inset: calc(50% - 5px); border: 1px solid #69745c; border-radius: 50%; background: #090a09; }
+.catalog-featured-sleeve { position: absolute; top: 8%; left: 0; z-index: 1; width: 77%; border: 1px solid #c6d0b244; background: #111510; box-shadow: 5px 16px 30px #0008; transform: rotate(-9deg) translateZ(0); transition: transform 700ms cubic-bezier(.2,.8,.2,1); }
+.catalog-featured-sleeve > img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
+.catalog-featured-sticker { position: absolute; top: -18px; right: -16px; display: grid; place-items: center; width: 82px; height: 82px; border-radius: 50%; color: #090a09; background: var(--green); font-size: 13px; font-weight: 600; line-height: 1.25; letter-spacing: 1px; white-space: pre-line; text-align: center; transform: rotate(12deg); }
+.catalog-featured-sleeve__footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px; color: #e3e6d8; font-size: 12px; }
+.catalog-record-object__serial { position: absolute; top: 3%; right: 0; color: var(--muted); font-size: 8px; letter-spacing: 2px; writing-mode: vertical-rl; }
+.catalog-record-object__caption { position: absolute; right: 2%; bottom: 0; display: flex; flex-direction: column; gap: 7px; text-align: right; color: var(--muted); font-size: 9px; letter-spacing: 1px; }
+.catalog-record-object__caption strong { color: var(--white); font-size: 25px; font-weight: 400; letter-spacing: -.5px; }
+.catalog-index-strip { display: grid; grid-template-columns: repeat(3, 1fr); border-block: 1px solid var(--border); }
+.catalog-index-strip > a { display: flex; align-items: center; justify-content: space-between; gap: 18px; min-height: 65px; padding: 16px 22px; font-size: 10px; letter-spacing: 1px; transition: color 220ms ease, background 220ms ease; }
+.catalog-index-strip > a + a { border-left: 1px solid var(--border); }
+.catalog-index-strip > a > span:first-child { color: var(--muted); font-size: 8px; }
+.catalog-index-strip > a > span:last-child { color: var(--green); font-size: 21px; }
+.catalog-index-strip > a:hover { color: var(--green); background: #b1f75006; }
+.catalog-page #music-latest-releases { padding-block: 70px 80px; }
+.catalog-page .release-highlights__heading { align-items: center; }
+.catalog-page .release-highlights__grid { grid-template-columns: 1.15fr 1fr; align-items: start; gap: 7%; }
+.catalog-page .release-highlights__release { border: 0; background: transparent; overflow: visible; }
+.catalog-page .release-highlights__release:nth-child(2) { margin-top: 96px; }
+.catalog-page .release-highlights__artwork-link { border: 1px solid #67795733; transform: rotate(-2deg); }
+.catalog-page .release-highlights__release:nth-child(2) .release-highlights__artwork-link { transform: rotate(3deg); }
+.catalog-page .release-highlights__details { padding: 26px 0 0; }
+.catalog-page .release-highlights__release-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(26px, 3vw, 43px); }
+.catalog-page .release-highlights__release--latest .release-highlights__release-title { font-size: clamp(32px, 4vw, 56px); }
+.catalog-page .release-highlights__listen { padding: 8px 0; border: 0; border-bottom: 1px solid #b1f75055; }
+.catalog-page .release-highlights__listen:hover { color: var(--green); background: transparent; }
+.catalog-rotation-room { display: grid; grid-template-columns: .8fr 1.4fr; gap: 8%; padding: 55px 0 70px; border-top: 1px solid var(--border); }
+.catalog-rotation-art { position: relative; min-height: 500px; }
+.catalog-page .catalog-rotation-art h2 { margin-top: 25px; font-family: Anton, Impact, sans-serif; font-size: clamp(64px, 7vw, 112px); font-weight: 400; line-height: 1.02; letter-spacing: -.02em; }
+.catalog-rotation-art h2 > span { color: var(--red); }
+.catalog-rotation-art__sleeves { position: relative; width: 220px; height: 195px; margin-top: 24px; }
+.catalog-rotation-art__sleeves img { position: absolute; top: 8px; left: 8px; width: 155px; height: 155px; object-fit: cover; border: 1px solid #bac9a533; box-shadow: 0 8px 25px #0006; transform: rotate(-12deg); }
+.catalog-rotation-art__sleeves img + img { top: 20px; left: 72px; transform: rotate(10deg); }
+.catalog-page .catalog-rotation-art__note { max-width: 230px; margin-top: 10px; color: var(--muted); font-size: 12px; line-height: 1.8; }
+.catalog-page #music-popular-tracks { min-width: 0; margin: 0; padding: 0; border: 0; }
+.catalog-page .popular-tracks__title { font-size: clamp(34px, 4vw, 52px); }
+.catalog-page .popular-tracks__row { padding-inline: 10px; background: transparent; }
+.catalog-page .popular-tracks__row:hover { background: #b1f75006; }
+.catalog-page .popular-tracks__name { font-size: clamp(17px, 1.6vw, 23px); }
+.catalog-page .catalog-releases { padding-top: 45px; }
+.catalog-page .catalog-section-heading { flex-wrap: wrap; align-items: flex-end; gap: 24px; }
+.catalog-page .catalog-section-heading h2 { margin-top: 18px; font-family: Anton, Impact, sans-serif; font-size: clamp(35px, 4.5vw, 64px); font-weight: 400; letter-spacing: -.02em; }
+.catalog-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.catalog-filters button { display: flex; align-items: center; gap: 20px; min-height: 44px; padding: 10px 14px; border: 1px solid var(--border); color: var(--muted); background: transparent; font-size: 11px !important; transition: border-color 200ms ease, color 200ms ease; }
+.catalog-filters button[aria-pressed='true'], .catalog-filters button:hover { color: var(--green); border-color: var(--green); }
+.catalog-filters button > span { color: var(--green); font-size: 17px; }
+.catalog-page .catalog-result { margin: 0 0 20px; color: var(--muted); font-size: 10px; letter-spacing: 1px; }
+.catalog-page .catalog-release-meta { padding-top: 22px; }
+.catalog-page .catalog-release-meta h3 { margin-top: 9px; font-size: clamp(19px, 2vw, 27px); }
+.catalog-page .catalog-preview { border-radius: 0; padding-inline: 11px; }
+.catalog-release.is-selected .catalog-artwork { outline: 1px solid var(--green); outline-offset: 5px; }
+.catalog-page .catalog-listen { margin-top: 85px; padding: clamp(24px, 4vw, 54px); border: 1px solid #69795744; background: #12160f; }
+.catalog-page .catalog-listen > .catalog-eyebrow { margin-bottom: 12px; }
+.catalog-page .catalog-listen .catalog-section-heading { margin-bottom: 28px; }
+.catalog-page .catalog-listen .catalog-section-heading h2 { font-size: clamp(30px, 4vw, 57px); }
+.catalog-page .catalog-listen .catalog-section-heading > svg { color: var(--green); }
+.catalog-page .catalog-note { font-size: 11px; }
+.catalog-page .catalog-next { margin-top: 85px; padding: clamp(28px, 5vw, 70px); color: #090a09; background: var(--green); }
+.catalog-page .catalog-next .catalog-eyebrow { color: #35451f; }
+.catalog-page .catalog-next h2 { margin-top: 24px; font-size: clamp(42px, 6vw, 90px); line-height: 1.03; }
+.catalog-next h2 > span { display: block; }
+.catalog-next__link { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; width: 150px; height: 150px; flex-shrink: 0; border: 1px solid #090a0955; border-radius: 50%; transition: color 250ms ease, background 250ms ease, transform 350ms ease; }
+.catalog-next__link > span { font-size: 8px; letter-spacing: .8px; }
+.catalog-next__link:hover { color: var(--green); background: #090a09; transform: rotate(-8deg); }
+.catalog-page :is(a, button):focus-visible { outline: 2px solid var(--green); outline-offset: 6px; }
+.catalog-next__link:focus-visible { outline-color: #090a09 !important; }
+.catalog-page :is(#music-latest-releases, #music-popular-tracks, #music-catalog, #music-listen) { scroll-margin-top: calc(var(--site-header-offset, 100px) + 25px); }
+@media (hover: hover) and (pointer: fine) { .catalog-record-object:hover .catalog-vinyl { transform: translateX(6%) rotate(35deg); } .catalog-record-object:hover .catalog-featured-sleeve { transform: rotate(-5deg) translateY(-12px); } }
+@media (max-width: 1100px) { .catalog-record-object { min-height: 420px; } .catalog-page .catalog-hero { min-height: 600px; } .catalog-edition { gap: 9px 12px; } .catalog-edition > span + span { padding-left: 12px; } .catalog-featured-sticker { width: 65px; height: 65px; font-size: 11px; } .catalog-rotation-room { gap: 5%; grid-template-columns: .7fr 1.3fr; } .catalog-rotation-art__sleeves { transform: scale(.85); transform-origin: left top; } }
+@media (max-width: 800px) { .catalog-page .catalog-hero { grid-template-columns: 1fr; gap: 20px; padding-top: 35px; } .catalog-page .catalog-hero h1 { font-size: clamp(62px, 12.5vw, 104px); } .catalog-record-object { width: 80%; min-height: 480px; margin: 35px auto 0; } .catalog-edition { margin-top: 30px; } .catalog-record-object__caption { right: 0; } .catalog-index-strip > a { padding-inline: 12px; gap: 9px; font-size: 8px; } .catalog-index-strip > a > span:first-child { display: none; } .catalog-page .release-highlights__grid { gap: 5%; } .catalog-page .release-highlights__release:nth-child(2) { margin-top: 70px; } .catalog-rotation-room { grid-template-columns: 1fr; gap: 40px; } .catalog-rotation-art { display: grid; grid-template-columns: 1fr 200px; min-height: 0; } .catalog-rotation-art > .catalog-eyebrow { grid-column: 1 / -1; } .catalog-page .catalog-rotation-art h2 { font-size: 76px; } .catalog-rotation-art__sleeves { align-self: center; } .catalog-page .catalog-rotation-art__note { grid-column: 1 / -1; } .catalog-page .catalog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 24px; } }
+@media (max-width: 560px) { .catalog-page .catalog-hero { padding-bottom: 36px; } .catalog-record-object { width: 92%; min-height: 360px; } .catalog-featured-sleeve { width: 73%; } .catalog-vinyl { top: 15%; width: 74%; } .catalog-record-object__caption { bottom: -5px; } .catalog-featured-sticker { right: -9px; width: 60px; height: 60px; font-size: 10px; } .catalog-featured-sleeve__footer { padding: 11px; font-size: 10px; } .catalog-index-strip { grid-template-columns: 1fr; } .catalog-index-strip > a { padding: 12px 0; min-height: 48px; font-size: 9px; } .catalog-index-strip > a + a { border-left: 0; border-top: 1px solid var(--border); } .catalog-index-strip > a > span:first-child { display: inline; } .catalog-page #music-latest-releases { padding-block: 45px 60px; } .catalog-page .release-highlights__grid { grid-template-columns: 1fr; gap: 45px; padding-inline: 5px; } .catalog-page .release-highlights__release:nth-child(2) { margin-top: 0; } .catalog-rotation-room { padding-block: 35px 50px; } .catalog-rotation-art { grid-template-columns: 1fr 140px; } .catalog-rotation-art__sleeves { transform: scale(.65); width: 140px; } .catalog-page .catalog-rotation-art h2 { font-size: 62px; } .catalog-rotation-art__note { margin-top: -25px !important; } .catalog-page .catalog-grid { grid-template-columns: 1fr; gap: 38px; } .catalog-filters { gap: 5px; } .catalog-filters button { gap: 15px; padding: 9px 11px; } .catalog-page .catalog-listen { margin-top: 50px; padding: 24px 18px; } .catalog-page .catalog-next { align-items: flex-start; flex-wrap: nowrap; margin-top: 50px; padding: 28px 22px; } .catalog-next__link { width: 90px; height: 90px; gap: 9px; } .catalog-next__link > svg { width: 28px; height: 28px; } .catalog-next__link > span { max-width: 60px; font-size: 7px; text-align: center; line-height: 1.5; } .catalog-page .catalog-next h2 { font-size: clamp(31px, 8vw, 45px); } }
+@media (prefers-reduced-motion: reduce) { .catalog-page *, .catalog-page *::before, .catalog-page *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } .catalog-record-object:hover .catalog-vinyl { transform: rotate(14deg); } .catalog-record-object:hover .catalog-featured-sleeve { transform: rotate(-9deg); } .catalog-button:hover, .catalog-next__link:hover { transform: none; } .catalog-artwork:hover > img { transform: none; } }

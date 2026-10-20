@@ -1,2 +1,3 @@
-import InfoScreen from '../features/account/InfoScreen';
-export default function Page() { return <InfoScreen page={`support`} />; }
+import InfoPage from '../features/public/InfoPage';
+const SupportPage = () => <InfoPage page={`support`} />;
+export default SupportPage;

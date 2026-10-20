@@ -1,0 +1,243 @@
+.account-shell { --account-accent: #b1f750; }
+.account-shell .account-page-heading {
+  position: relative;
+  isolation: isolate;
+  min-height: 230px;
+  overflow: hidden;
+  padding: 20px 0 28px;
+  border-top: 2px solid var(--account-accent);
+  border-bottom: 1px solid var(--border);
+}
+.account-heading-folio { display: flex; align-items: center; justify-content: space-between; gap: 20px; width: 100%; }
+.account-heading-folio .account-mode { color: var(--account-accent); }
+.account-page-number { color: var(--muted); font-size: 9px; letter-spacing: 2px; white-space: nowrap; }
+.account-heading-word { position: absolute; z-index: -1; right: -5px; bottom: -12px; color: #e4ecd508; font-family: Anton, Impact, sans-serif; font-size: clamp(90px, 13vw, 190px); line-height: .95; letter-spacing: -.045em; pointer-events: none; user-select: none; }
+.account-shell .account-title { max-width: 85%; margin-top: 28px; font-size: clamp(42px, 5.4vw, 76px); }
+.account-shell .account-description { max-width: 550px; }
+.account-shell .account-panel { min-width: 0; border-radius: 3px; }
+.account-shell .account-panel-heading { min-width: 0; }
+.account-shell .account-panel-title { font-family: Anton, Impact, sans-serif; font-size: 29px; line-height: 1.2; }
+.account-shell .account-panel-number { color: var(--account-accent); }
+.account-shell .account-panel-eyebrow { color: var(--account-accent); }
+.account-shell .account-copy { font-size: 14px; line-height: 1.85; overflow-wrap: anywhere; }
+.account-shell .account-action { border-radius: 2px; transition: transform 220ms ease, opacity 220ms ease; }
+.account-shell .account-action-label { font-size: 12px; line-height: 1.5; text-align: center; }
+.account-shell .account-action[aria-disabled='true'] { cursor: default; }
+.account-shell .account-link { font-size: 13px; line-height: 1.6; }
+.account-shell input, .account-shell textarea { border-radius: 2px; background: #080b08; }
+.account-shell input:focus, .account-shell textarea:focus { border-color: var(--account-accent); outline: 1px solid var(--account-accent); outline-offset: 2px; }
+.account-shell [role='button']:focus-visible, .account-shell a:focus-visible { outline: 2px solid var(--account-accent); outline-offset: 4px; }
+.account-shell .account-page-heading, .account-shell .account-page-panels > * { animation: account-surface-enter 550ms cubic-bezier(.22, 1, .36, 1) both; }
+.account-shell[data-intro-ready='false'] .account-page-heading, .account-shell[data-intro-ready='false'] .account-page-panels > * { animation-play-state: paused; }
+@keyframes account-surface-enter { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+/* A shelf of actual records, with their vinyl peeking out of the sleeves. */
+.account-page--library .account-heading-word { color: #b1f7500a; }
+.account-page--library .library-crate-summary { padding-inline: 0; }
+.account-page--library .library-crate-stats { gap: clamp(24px, 5vw, 70px); }
+.account-page--library .library-favorite-count > :first-child { color: var(--green); }
+.account-page--library .library-tools { display: grid; grid-template-columns: minmax(180px, 1fr) auto; align-items: center; gap: 18px; }
+.account-page--library .library-search { width: 100%; }
+.account-page--library .library-filters { gap: 6px; }
+.account-page--library .library-filters .account-action { min-height: 42px; padding: 9px 11px; border-color: var(--border); }
+.account-page--library .library-filters .account-action[aria-selected='true'] { border-color: var(--green); background: #b1f75012; }
+.account-page--library .library-catalog { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(20px, 3vw, 36px); }
+.account-page--library .library-record { width: auto !important; padding: clamp(18px, 2.5vw, 30px); background-image: linear-gradient(140deg, #1c2516, #0e120c 65%); }
+.account-page--library .library-record-sleeve { margin-top: 6px; }
+.account-page--library .library-vinyl { top: 9%; right: 0; width: 76%; }
+.account-page--library .library-vinyl .record-mark { width: 100% !important; height: auto !important; aspect-ratio: 1; padding: 8% !important; }
+.account-page--library .library-artwork { z-index: 1; box-shadow: 7px 8px 22px #0006; }
+.account-page--library .library-record-title { font-size: clamp(26px, 3vw, 42px); line-height: 1.16; }
+.account-page--library .library-actions { gap: 8px; margin-top: 5px; }
+.account-page--library .library-actions .account-action { flex: 1 1 120px; min-height: 44px; padding: 10px; }
+.account-page--library .library-actions .account-action:first-child { flex-basis: 100%; background: #b1f7500b; }
+.account-page--library .library-record .account-copy { font-size: 10px; letter-spacing: 1.5px; }
+.account-page--library .library-storage-status:empty { display: none; }
+
+/* Mixtape sleeves and a separate track-list workbench. */
+.account-page--collections .account-heading-word { right: 4px; bottom: -20px; color: #c4b0f00b; transform: rotate(-3deg); }
+.account-page--collections .collections-workbench { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: start; gap: 28px; }
+.account-page--collections .collections-sleeves-column, .account-page--collections .collections-editor-column { min-width: 0; }
+.account-page--collections .collections-editor-column { position: sticky; top: calc(var(--site-header-offset, 64px) + 24px); }
+.account-page--collections .account-panel { border-color: #3e334a; background: #17131c; }
+.account-page--collections .account-action { border-color: #76618d; }
+.account-page--collections .account-action-label, .account-page--collections .account-link { color: #c4b0f0; }
+.account-page--collections .collection-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.account-page--collections .collection-sleeve { min-width: 0; transition: opacity 200ms ease; }
+.account-page--collections .collection-sleeve[aria-selected='true'] { outline: 1px solid #c4b0f0; outline-offset: 3px; }
+.account-page--collections .mixtape-name { font-size: 23px; }
+.account-page--collections .collection-sleeve-title { font-size: 13px; }
+.account-page--collections .collection-sleeve-count { font-size: 8px; white-space: nowrap; }
+.account-page--collections .collection-editor-waiting { padding: 24px; border: 1px dashed #574666; }
+.account-page--collections .collection-editor-waiting .mixtape-art { opacity: .6; transform: rotate(3deg); }
+.account-page--collections .collection-membership-row .account-action { align-items: flex-start; border: 0; padding-inline: 0; }
+.account-page--collections .collection-membership-row .account-action[aria-selected='true'] { background: transparent; }
+.account-page--collections #account-action-collection-share { margin-top: 10px; border-color: #c4b0f0; background: #c4b0f00a; }
+.account-page--collections #account-action-collection-remove, .account-page--collections #account-action-collection-remove-confirm { border-color: #e8493955; }
+.account-page--collections #account-action-label-collection-remove, .account-page--collections #account-action-label-collection-remove-confirm { color: #ee8e81; }
+
+/* The listener's passport stays beside their editable details. */
+.account-page--profile .account-heading-word { color: #d8cdb809; }
+.account-page--profile .profile-columns { display: grid; grid-template-columns: minmax(0, 1fr) 240px; align-items: start; gap: clamp(20px, 3vw, 36px); }
+.account-page--profile .profile-details { min-width: 0; }
+.account-page--profile .profile-metadata { position: sticky; top: calc(var(--site-header-offset, 64px) + 20px); width: 240px; max-height: calc(100dvh - var(--site-header-offset, 64px) - 40px); overflow-y: auto; }
+.account-page--profile .account-panel { border-color: #4b493d; background: #171912; }
+.account-page--profile #account-panel-profile-identity { padding: clamp(20px, 3vw, 32px); }
+.account-page--profile .profile-avatar-row { padding-bottom: 18px; border-bottom: 1px solid #373a2f; }
+.account-page--profile .profile-edit-row { display: grid; grid-template-columns: 100px minmax(0, 1fr); align-items: start; gap: 15px; padding-block: 17px; border-bottom: 1px solid #373a2f; }
+.account-page--profile .profile-edit-row > :first-child { padding-top: 12px; color: #b3b29f; font-size: 11px; }
+.account-page--profile .profile-edit-row > :last-child { min-width: 0; }
+.account-page--profile #account-panel-title-profile-account-status { font-size: 25px; }
+.account-page--profile .profile-metadata .account-panel { gap: 14px; padding: 20px; }
+.account-page--profile .profile-metadata .account-copy { font-size: 12px; }
+.account-page--profile .profile-metadata .account-link { padding-block: 8px; color: #d8cdb8; }
+.account-page--profile .profile-welcome { border-color: #4b493d; background: #171912; }
+
+/* Numbered channels make controls feel like a personal patchbay. */
+.account-page--settings .account-page-heading { background-image: radial-gradient(#8ecad015 1px, transparent 1px); background-size: 13px 13px; }
+.account-page--settings .account-heading-word { color: #8ecad00b; }
+.account-page--settings .settings-patch-panels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; gap: 18px; }
+.account-page--settings .settings-account-panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 24px; }
+.account-page--settings .account-panel { padding: 24px; border-color: #35494a; background: #10191a; }
+.account-page--settings .account-panel-heading { padding-bottom: 20px; border-bottom: 1px solid #35494a; }
+.account-page--settings .account-panel-title { font-size: 27px; }
+.account-page--settings .account-action { border-color: #47676b; }
+.account-page--settings .account-action-label, .account-page--settings .account-link { color: #8ecad0; }
+.account-page--settings #account-panel-settings-account { border-color: #5c3b32; }
+.account-page--settings #account-action-delete-account, .account-page--settings #account-action-settings-delete-confirm { border-color: #e8493966; background: #e8493906; }
+.account-page--settings #account-action-label-delete-account, .account-page--settings #account-action-label-settings-delete-confirm { color: #f38b7f; }
+.account-page--settings .settings-palette { gap: 10px; padding-block: 4px; }
+.account-page--settings .settings-swatch { box-shadow: 0 0 0 4px #10191a, 0 0 0 5px #35494a; }
+
+/* The archive is an editorial ledger of saved messages. */
+.account-page--inquiries .account-page-heading { border-bottom-style: dashed; }
+.account-page--inquiries .account-heading-word { color: #ed9a7209; }
+.account-page--inquiries .inquiries-toolbar { padding-inline: 22px; background: #1b1511; }
+.account-page--inquiries .inquiries-contact, .account-page--inquiries #account-link-inquiries-contact { color: #ed9a72; }
+.account-page--inquiries .inquiries-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 30px; }
+.account-page--inquiries .dispatch-envelope { min-width: 0; padding-top: 18px; border-top: 1px dashed #76503d; }
+.account-page--inquiries .dispatch-index { align-items: center; margin-bottom: 14px; }
+.account-page--inquiries .dispatch-stamp { transform: rotate(-5deg); }
+.account-page--inquiries .account-panel { border-color: #4d382c; background: #1a1612; }
+.account-page--inquiries .inquiry-metadata { justify-content: space-between; gap: 10px; }
+.account-page--inquiries .inquiry-email { font-size: 12px; color: #b9a593; }
+.account-page--inquiries .inquiry-body { padding: 20px 0; border-block: 1px solid #4d382c; color: #d8cbbd; font-size: 14px; line-height: 1.9; white-space: pre-wrap; overflow-wrap: anywhere; }
+.account-page--inquiries .actionsCell { gap: 10px; }
+.account-page--inquiries .actionsCell .account-action { flex: 1 1 140px; border-color: #76503d; }
+.account-page--inquiries .account-action-label { color: #ed9a72; }
+.account-page--inquiries .rowStatus { gap: 6px; }
+
+/* Each admission type owns its ticket and its form composition. */
+.account-page--signin .account-page-heading, .account-page--signup .account-page-heading, .account-page--recovery .account-page-heading { min-height: 190px; }
+.account-page--signin .account-heading-word, .account-page--signup .account-heading-word, .account-page--recovery .account-heading-word { color: #e4ecd508; font-size: clamp(90px, 12vw, 160px); }
+.account-shell .auth-composition { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); align-items: stretch; gap: clamp(24px, 3vw, 44px); max-width: 1200px; }
+.account-shell .auth-art-column, .account-shell .auth-form-column { min-width: 0; }
+.account-shell .auth-form-column .account-panel { height: 100%; padding: clamp(22px, 3vw, 40px); background: #11150f; }
+.account-shell .auth-google { flex-wrap: nowrap; gap: 15px; }
+.account-shell .auth-google .account-action { flex: 1; border-color: #454b3c; }
+.account-shell #account-copy-auth-email-divider { position: relative; padding-block: 12px; text-align: center; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
+.account-shell .auth-label { font-size: 11px; }
+.account-shell #account-action-auth-submit { margin-top: 8px; background: var(--account-accent); border-color: var(--account-accent); }
+.account-shell #account-action-label-auth-submit { color: #11150d; font-size: 13px; }
+.account-shell #account-link-auth-switch, .account-shell #account-link-auth-reset { font-size: 11px; padding-block: 7px; }
+.account-shell .auth-policy-links { gap: 22px; border-top: 1px solid var(--border); padding-top: 10px; }
+.account-page--signup .auth-art-column { grid-column: 2; grid-row: 1; }
+.account-page--signup .auth-form-column { grid-column: 1; grid-row: 1; }
+.account-page--signup .auth-form-column .account-panel { border-color: #4b3b60; background: #15121a; }
+.account-page--signup .account-link { color: #c4b0f0; }
+.account-page--recovery .auth-composition { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
+.account-page--recovery .auth-form-column { align-self: center; }
+.account-page--recovery .auth-form-column .account-panel { padding-block: 40px; border-color: #614333; background: #1a1511; }
+.account-page--recovery .admission-ticket { min-height: 480px; }
+.account-page--recovery .admission-slogan { font-size: clamp(45px, 5vw, 78px) !important; }
+.account-page--recovery .account-link { color: #ed9a72; }
+
+/* External listening routes, distinct from account credentials. */
+.account-page--connections .account-heading-word { color: #a1d6be0a; }
+.account-page--connections .account-patchbay { border-color: #385448; background-color: #132019; }
+.account-page--connections .connections-endpoints { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.account-page--connections #account-panel-connections-account { grid-column: 1 / -1; border-color: #385448; background: #121b15; }
+.account-page--connections .connection-endpoint { position: relative; padding-right: 55px; }
+.account-page--connections .connection-endpoint::after { content: ''; position: absolute; top: 24px; right: 24px; width: 18px; height: 18px; border: 3px solid #557567; border-radius: 50%; box-shadow: 0 0 0 4px #0b110e, 0 0 0 5px #385448; }
+.account-page--connections #connection-endpoint-amazon { border-color: #d7b77d; background: #211b13; }
+.account-page--connections #connection-endpoint-amazon .connection-endpoint-label, .account-page--connections #account-link-connections-amazon-link { color: #d7b77d; }
+.account-page--connections .account-link { color: #a1d6be; }
+
+/* Restricted studio surfaces stay useful without inventing reports. */
+.account-page--studio .account-heading-word { color: #e8493909; }
+.account-page--studio .studio-access-layout { display: grid; grid-template-columns: minmax(240px, .85fr) minmax(0, 1.15fr); align-items: stretch; gap: 28px; }
+.account-page--studio .studio-door-column { min-width: 0; }
+.account-page--studio .studio-door { height: 100%; min-height: 470px; }
+.account-page--studio .studio-access-column { min-width: 0; }
+.account-page--studio .account-panel { background: #161512; border-color: #443b31; }
+.account-page--studio .account-panel-eyebrow { color: #dc8970; }
+
+@media (hover: hover) {
+  .account-shell .account-action:not([aria-disabled='true']):hover { transform: translateY(-2px); }
+  .account-page--collections .collection-sleeve:not([aria-disabled='true']):hover .mixtape-art { transform: translateY(-3px) rotate(-1deg); }
+}
+@media (max-width: 1300px) {
+  .account-page--library .library-tools { grid-template-columns: 1fr; }
+  .account-page--settings .settings-patch-panels { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .account-page--collections .collection-list { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 1150px) {
+  .account-page--collections .collections-workbench { grid-template-columns: minmax(0, 1fr); }
+  .account-page--collections .collections-editor-column { position: static; }
+  .account-page--collections .collection-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .account-page--inquiries .inquiries-list { grid-template-columns: minmax(0, 1fr); }
+  .account-page--studio .studio-access-layout { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); }
+}
+@media (max-width: 1100px) {
+  .account-page--profile .profile-columns { grid-template-columns: minmax(0, 1fr); }
+  .account-page--profile .profile-metadata { position: static; width: 100% !important; max-height: none; overflow: visible; }
+  .account-page--profile .profile-metadata .account-panel { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+  .account-page--profile .profile-metadata .account-panel-heading { grid-column: 1 / -1; }
+  .account-shell .auth-composition { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 22px; }
+  .account-page--signup .auth-art-column { grid-column: 1; }
+  .account-page--signup .auth-form-column { grid-column: 2; }
+  .account-shell .admission-ticket { padding: 22px; }
+  .account-shell .admission-slogan { font-size: clamp(48px, 6.5vw, 78px) !important; }
+}
+@media (max-width: 900px) {
+  .account-page--library .library-catalog, .account-page--settings .settings-patch-panels, .account-page--settings .settings-account-panels, .account-page--connections .connections-endpoints, .account-page--studio .studio-access-layout, .account-shell .auth-composition { grid-template-columns: minmax(0, 1fr); }
+  .account-page--signup .auth-art-column, .account-page--signup .auth-form-column { grid-column: auto; grid-row: auto; }
+  .account-shell .admission-ticket { min-height: 410px; }
+  .account-shell .admission-slogan { font-size: 72px !important; }
+  .account-page--studio .studio-door { min-height: 360px; }
+}
+@media (max-width: 650px) {
+  .account-shell .account-page-heading { min-height: 210px; padding-top: 18px; padding-bottom: 24px; }
+  .account-shell .account-title { max-width: 100%; margin-top: 22px; font-size: clamp(40px, 11vw, 62px); }
+  .account-heading-word { right: -3px; bottom: -4px; font-size: clamp(78px, 20vw, 130px); }
+  .account-heading-folio { gap: 12px; }
+  .account-heading-folio .account-mode { font-size: 8px; letter-spacing: 1.2px; }
+  .account-page-number { font-size: 8px; }
+  .account-shell .account-panel { padding: 20px; }
+  .account-page--collections .collection-list { grid-template-columns: minmax(0, 1fr); }
+  .account-page--collections .collection-editor-waiting { padding: 20px; }
+  .account-page--profile .profile-metadata .account-panel { display: flex; }
+  .account-page--profile .passport-name { font-size: 29px; }
+  .account-page--profile .listener-passport { padding: 20px; }
+  .account-page--inquiries .inquiries-toolbar { padding-inline: 18px; }
+  .account-page--inquiries .inquiries-list { gap: 24px; }
+  .account-page--connections .connection-endpoint { padding: 22px 50px 22px 22px; }
+  .account-shell .auth-form-column .account-panel { padding: 24px 20px; }
+  .account-shell .admission-ticket { min-height: 420px !important; }
+  .account-page--recovery .admission-slogan { font-size: 60px !important; }
+}
+@media (max-width: 480px) {
+  .account-page--profile .profile-edit-row { grid-template-columns: 65px minmax(0, 1fr); gap: 12px; }
+  .account-page--profile .profile-edit-row > :first-child { font-size: 10px; }
+  .account-page--profile .passport-portrait { width: 85px; min-height: 105px; }
+  .account-page--profile .passport-identity { min-width: 120px; }
+  .account-page--library .library-filters { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .account-page--library .library-record { padding: 18px; }
+  .account-page--library .library-crate-stats { width: 100%; justify-content: space-between; }
+  .account-shell .auth-google .account-action-label { font-size: 11px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .account-shell .account-page-heading, .account-shell .account-page-panels > * { animation: none; }
+  .account-shell .account-action, .account-shell .collection-sleeve { transition: none; }
+  .account-shell .account-action:not([aria-disabled='true']):hover, .account-page--collections .collection-sleeve:not([aria-disabled='true']):hover .mixtape-art { transform: none; }
+}

@@ -133,9 +133,37 @@ npm run build
 
 ## Content and migration
 
-The verified initial release selection is **Come Thru**, **MiSSery**, and **Passenger Princess**. Update titles, URLs and images in `src/config/artist.ts` as new music arrives. See `assets/README.md` for source URLs and font licenses.
+The latest-release spotlight features **Kiss N Tell** (October 17, 2026) and **Autobahn** (October 14, 2026), followed by a separate Spotify popular-track list. **Come Thru**, **MiSSery**, and **Passenger Princess** remain in the catalog with their existing URLs so saved libraries and editorial references stay compatible. Update `recentReleases` and `popularTracks` in `src/config/artist.ts` as new music arrives. See [music highlight sources](docs/music-highlights.md) and `assets/README.md` for evidence, artwork sources, and font licenses.
 
 The copied Next.js/MUI/Smart Garden/QuizList scaffold has been removed from the active app and dependency graph. On this machine the original source and generated dependencies were preserved in the ignored `.legacy-template/` folder; Git history also retains the old tracked source. `public/sw.js` retires the old Next PWA service worker for returning visitors. The old local `.env` is ignored and unused.
+
+## Public pages and shared chrome
+
+The reusable `AGENTS.md` and complete 316-file `ai/` pack are synchronized from [Spelling-Spells main, commit 898e0f96](https://github.com/strawhat19/Spelling-Spells/tree/898e0f96eac77a039c70bdac2b40758a0c0df17f). This was the newest coherent general pack found in the available repositories; Piratex main retained an older copy. App-specific content and integration notes stay outside `ai/`.
+
+Public routes now include `/about`, `/contact`, `/support`, `/terms`, `/privacy`, `/music`, `/sound-lab`, and `/blog`. The existing `/about-us`, `/contact-us`, `/terms-of-service`, and `/privacy-policy` aliases redirect to their canonical pages. Journal articles and World, Listening, and Sound Lab category pages have static export parameters. The three original articles are website editorial written October 20, 2026, with official listening destinations and site-feature sources; they are not artist interviews, release announcements, or a connected CMS.
+
+`src/shared/site/routes.ts` supplies navigation. All inner web pages use `SiteChrome` with the landing's `SiteHeader`, animated K orbit, audio strip, Spotify control, footer, and chevron scroll-to-top. The mobile menu begins at 1100px to reserve space for header controls. Its persistent panel supports opening and closing character transitions, outside dismissal, Escape focus restoration, and reduced motion. The dedicated Sound Lab shares its audio state with its header/footer and includes a Spotify player on the same page for supported tab-audio sharing. Browser audio-sharing permission and Spotify playback remain under the visitor's control.
+
+Account pages use the shared chrome with a compact header and a desktop rail sized from the natural brand extent. Account navigation includes Profile, Library, Collections, and Settings. A signed-in avatar menu provides Profile, Settings, and Sign Out. Guest and Subscriber accounts do not expose ADMIN navigation or enable privileged services. Native inner pages use native shared chrome and supported page views; the native landing retains its existing screen.
+
+The landing page, hero component, and landing stylesheet were preserved. Shared-header navigation reaches internal pages. Contact saves inquiries with a record ID, timestamps, and status, and offers Copy/Download on web or Share on native. Saved inquiries appear at `/profile/inquiries`, with read, archive, and restore actions. Saving an inquiry does not send it to the artist.
+
+## Account storage
+
+`src/shared/account/AuthContext.tsx` exposes account sessions and actions through `useAuth`. The local adapter in `auth.ts` supports email/password sign-up and sign-in, profile edits, password changes, sign-out, and account deletion. Password credentials use salted PBKDF2 hashes stored separately from profile records. Password operations require browser Web Crypto, available over HTTPS or localhost. Google sign-in and email recovery are not connected.
+
+`storage.ts` centralizes browser `localStorage` access, change subscriptions, and serialized writes. Account IDs scope favorites, collections, navigation preferences, and inquiries; existing guest keys remain compatible. Mutations confirm success after storage commits and retain inputs when a write fails. Deleting an account removes its profile, credentials, session, and scoped data. Subscriber is the default account role; browser accounts do not grant studio access.
+
+Browser data persists on the current browser and does not sync between devices. Native data uses session memory, and password operations report an unavailable secure-browser capability when Web Crypto is absent. Firebase Firestore and Google authentication are planned replacements for the local adapter. No Firebase project, remote authentication, external message delivery, or deployment was configured by this work.
+
+The earlier public-page pass included TypeScript, lint, web export, and browser review. The subsequent local-account changes have not been tested, built, or checked in a browser, per the requested review-first workflow.
+
+## Inner-page art direction
+
+Inner pages have distinct visual identities: Music is a record shop with layered sleeves, crate filters, and a listening room; Sound Lab is an instrument console around the existing visualizer; About is an origin dossier; Contact is an inquiry desk; Support is a searchable field guide. The Journal uses editorial covers and chapter navigation, while Terms and Privacy have their own document treatments. Account pages use record crates, mixtape sleeves, listener passports, patchbays, and dispatch ledgers around the existing account actions.
+
+This design pass preserves the landing page, shared header, page-transition loader, and sound-bar/visualizer animation implementations. It adds no dependencies or continuous animation loops. Decorative artwork uses existing assets, CSS, and static SVG; hover transitions respect reduced motion. Layouts include responsive web rules and native adaptations. No performance scores, device parity, or browser rendering have been measured for this pass; tests, builds, and UI checks remain for review.
 
 ## License
 

@@ -1,28 +1,38 @@
-import { Platform } from 'react-native';
 import { createContext, useContext, useEffect, useState, type PropsWithChildren } from 'react';
+import { accountStorageKey, readStoredValue, subscribeStorage, writeStoredValues } from './storage';
+import { navigationStorageKey } from './workspace';
 
-const storageKey = `kalashi:guest-navigation:v1`;
-const NavigationContext = createContext({ collapsed: false, ready: false, notice: `Navigation preference lasts for this session.`, toggle: () => {} });
-export const AccountNavigationProvider = ({ children }: PropsWithChildren) => {
-  const [ready, setReady] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
-  const [notice, setNotice] = useState(`Navigation preference lasts for this session.`);
+const NavigationContext = createContext({ collapsed: false, ready: false, notice: ``, toggle: () => {} });
+type Snapshot = { scope: string; collapsed: boolean; ready: boolean; notice: string };
+export const AccountNavigationProvider = ({ children, scope = `guest` }: PropsWithChildren<{ scope?: string }>) => {
+  const [snapshot, setSnapshot] = useState<Snapshot>({ scope: ``, collapsed: false, ready: false, notice: `` });
+  const key = accountStorageKey(navigationStorageKey, scope);
+  const ready = snapshot.scope === scope && snapshot.ready;
+  const collapsed = snapshot.scope === scope && snapshot.collapsed;
+  const notice = snapshot.scope === scope ? snapshot.notice : ``;
+
   useEffect(() => {
-    if (Platform.OS === `web`) {
-      try {
-        setCollapsed(window.localStorage.getItem(storageKey) === `collapsed`);
-        setNotice(`Navigation preference is saved in this browser.`);
-      } catch { setNotice(`Storage unavailable. Navigation preference lasts for this session.`); }
-    }
-    setReady(true);
-  }, []);
+    let current = true;
+    const load = () => {
+      void Promise.resolve().then(() => readStoredValue(key)).then(value => {
+        if (current) setSnapshot({ scope, collapsed: value === `collapsed`, ready: true, notice: `` });
+      }).catch(error => {
+        if (current) setSnapshot({ scope, collapsed: false, ready: true, notice: error instanceof Error ? error.message : `Your navigation preference could not be opened` });
+      });
+    };
+    load();
+    const unsubscribe = subscribeStorage(key, load);
+    return () => { current = false; unsubscribe(); };
+  }, [key, scope]);
+
   const toggle = () => {
     if (!ready) return;
-    const next = !collapsed;
-    setCollapsed(next);
-    if (Platform.OS === `web`) {
-      try { window.localStorage.setItem(storageKey, next ? `collapsed` : `expanded`); }
-      catch { setNotice(`Could not save navigation preference. Using this session only.`); }
+    try {
+      const next = readStoredValue(key) !== `collapsed`;
+      writeStoredValues([{ key, value: next ? `collapsed` : `expanded` }]);
+      setSnapshot({ scope, collapsed: next, ready: true, notice: `` });
+    } catch (error) {
+      setSnapshot(previous => ({ ...previous, notice: error instanceof Error ? error.message : `Your navigation preference could not be saved` }));
     }
   };
   return <NavigationContext.Provider value={{ collapsed, ready, notice, toggle }}>{children}</NavigationContext.Provider>;

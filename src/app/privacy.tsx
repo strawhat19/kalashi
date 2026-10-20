@@ -1,2 +1,3 @@
-import InfoScreen from '../features/account/InfoScreen';
-export default function Page() { return <InfoScreen page={`privacy`} />; }
+import InfoPage from '../features/public/InfoPage';
+const PrivacyPage = () => <InfoPage page={`privacy`} />;
+export default PrivacyPage;

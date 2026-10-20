@@ -1,8 +1,9 @@
 import type { PropsWithChildren } from 'react';
 import { colors } from '../../theme/tokens';
+import SiteChrome from '../SiteChrome';
 import { ActivityIndicator, Image, Text, View } from 'react-native';
 
-const AppFrame = ({ ready, children }: PropsWithChildren<{ ready: boolean }>) => ready ? children : (
+const AppFrame = ({ ready, children }: PropsWithChildren<{ ready: boolean }>) => ready ? <SiteChrome ready={ready}>{children}</SiteChrome> : (
   <View style={{ flex: 1, gap: 18, alignItems: `center`, justifyContent: `center`, backgroundColor: colors.black }}>
     <Image source={require('../../../assets/brand/icon.png')} style={{ width: 78, height: 78 }} accessibilityIgnoresInvertColors />
     <Text style={{ color: colors.white, fontSize: 12, letterSpacing: 4 }}>{`KALASHI MUSIC`}</Text>

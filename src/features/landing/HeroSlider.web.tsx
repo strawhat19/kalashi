@@ -2,7 +2,7 @@ import './HeroSlider.css';
 import { useEffect, useId, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
 import { ArrowIcon, PlayIcon, SpotifyIcon } from '../../components/Icons.web';
 import SplitText from '../../components/motion/SplitText.web';
-import { artist, releases } from '../../config/artist';
+import { artist, releases, latestRelease, recentReleases } from '../../config/artist';
 import { heroSliderConfig } from '../../config/heroSlider';
 import HeroVisualizer from '../../components/visualizer/HeroVisualizer.web';
 import AudioBorder from '../../components/visualizer/AudioBorder.web';
@@ -17,10 +17,10 @@ type HeroSliderProps = {
 };
 
 const slides = [
-  { title: `A world in my sound`, releaseIndex: 0 },
-  { title: `Come Thru`, releaseIndex: 0, eyebrow: `THE LATEST FREQUENCY`, firstLine: `COME`, secondLine: `THRU.`, description: `Come Thru. A new Kalashi single.`, detail: `Press play. Find your frequency.` },
+  { title: `A world in my sound`, release: latestRelease },
+  { title: `Kiss N Tell`, release: latestRelease, eyebrow: `LATEST RELEASE / OCTOBER 17, 2026`, firstLine: `KISS N`, secondLine: `TELL.`, description: `The newest Kalashi single.`, detail: `Fresh out. Ready for your rotation.` },
+  { title: `Autobahn`, release: recentReleases[1], eyebrow: `NO. 01 / SPOTIFY TOP TRACKS`, firstLine: `AUTOBAHN.`, secondLine: `ON REPEAT.`, description: `A new single. Already in the rotation.`, detail: `Turn it up. Take the long way.` },
   { title: `MiSSery`, releaseIndex: 1, eyebrow: `STEP INSIDE THE ALBUM`, firstLine: `MiSSERY.`, secondLine: `ON REPEAT.`, description: `A whole world inside one album.`, detail: `Get into MiSSery. Stay a while.` },
-  { title: `Passenger Princess`, releaseIndex: 2, eyebrow: `TAKE THE LONG WAY HOME`, firstLine: `PASSENGER`, secondLine: `PRINCESS.`, description: `Passenger Princess. Kalashi, 2026.`, detail: `One more track for your rotation.` },
 ] as const;
 
 const wrapIndex = (index: number) => (index + slides.length) % slides.length;
@@ -143,8 +143,17 @@ const HeroSlider = ({ ready = true, onListen, visualizerState, autoplay = heroSl
     onClickCapture={(event) => { if (Date.now() < suppressClickUntil.current) { event.preventDefault(); event.stopPropagation(); } }}
   >
     {slides.map((slide, index) => {
-      const currentRelease = releases[slide.releaseIndex];
+      const currentRelease = `release` in slide ? slide.release : releases[slide.releaseIndex];
+      const releaseUrl = `release` in slide ? slide.release.listeningUrl : releases[slide.releaseIndex].spotifyUrl;
+      const provider = `release` in slide ? slide.release.provider : `Spotify`;
+      const latest = `release` in slide && slide.release.id === latestRelease.id;
       const active = index === activeIndex;
+      const featuredContent = <>
+        <HeroVisualizer state={visualizerState} ready={ready && active} />
+        <img src={currentRelease.webArtwork} width={74} height={74} alt={`${currentRelease.title} ${currentRelease.type.toLowerCase()} artwork`} draggable={false} />
+        <span className={`featured-copy`}><span className={`micro-label`}><i />{latest ? `LATEST RELEASE` : `release` in slide ? `POPULAR ON SPOTIFY` : `IN THE ROTATION`}</span><strong>{currentRelease.title}</strong><small>{`release` in slide ? `${currentRelease.type.toUpperCase()} · ${slide.release.releaseLabel.toUpperCase()}` : `KALASHI · ${currentRelease.type.toUpperCase()} · ${currentRelease.year}`}</small></span>
+        <span className={`featured-action`} aria-hidden={true}><span className={`featured-play`}><PlayIcon size={24} /></span><span>{`LISTEN`}</span></span>
+      </>;
       return <div
         id={`${slideId}-${index}`}
         key={slide.title}
@@ -166,16 +175,11 @@ const HeroSlider = ({ ready = true, onListen, visualizerState, autoplay = heroSl
           <h2>{`firstLine` in slide ? <><SplitText text={slide.firstLine} ready={ready && active} delay={80} /><br /><span className={`accent-text`}><SplitText text={slide.secondLine} ready={ready && active} delay={150} /></span></> : <><SplitText text={`A WORLD`} ready={ready && active} delay={80} /><br /><SplitText text={`IN MY `} ready={ready && active} delay={150} /><span className={`accent-text`}><SplitText text={`SOUND.`} ready={ready && active} delay={240} /></span></>}</h2>
           <p>{`description` in slide ? slide.description : `Bangladesh roots. Atlanta energy.`}<br />{`detail` in slide ? slide.detail : `No boxes. No borders. Just Kalashi.`}</p>
           <AudioBorder className={`hero-listen-border`} state={visualizerState} ready={ready && active} radius={999} amplitude={6.5}>
-            <a className={`button button-green`} href={index === 0 ? artist.spotifyUrl : currentRelease.spotifyUrl} target={`_blank`} rel={`noopener noreferrer`}><SpotifyIcon />{`Listen on Spotify`}<ArrowIcon size={18} /></a>
+            <a className={`button button-green`} href={index === 0 ? artist.spotifyUrl : releaseUrl} target={`_blank`} rel={`noopener noreferrer`}>{index === 0 || provider === `Spotify` ? <SpotifyIcon /> : <PlayIcon />}{`Listen on ${index === 0 ? `Spotify` : provider}`}<ArrowIcon size={18} /></a>
           </AudioBorder>
           <a className={`explore-link`} href={`#music`}>{`Explore the music`}<span>{`↓`}</span></a>
         </div>
-        <button className={`featured-release featured-release--signal`} type={`button`} onClick={() => onListen(slide.releaseIndex)} aria-label={`Load ${currentRelease.title} in the Spotify player`}>
-          <HeroVisualizer state={visualizerState} ready={ready && active} />
-          <img src={currentRelease.webArtwork} width={74} height={74} alt={`${currentRelease.title} ${currentRelease.type.toLowerCase()} artwork`} draggable={false} />
-          <span className={`featured-copy`}><span className={`micro-label`}><i />{index < 2 ? `LATEST FREQUENCY` : `IN THE ROTATION`}</span><strong>{currentRelease.title}</strong><small>{`KALASHI · ${currentRelease.type.toUpperCase()} · ${currentRelease.year}`}</small></span>
-          <span className={`featured-action`} aria-hidden={true}><span className={`featured-play`}><PlayIcon size={24} /></span><span>{`LISTEN`}</span></span>
-        </button>
+        {`release` in slide ? <a id={`hero-featured-${slide.release.id}-${index}`} className={`featured-release featured-release--signal`} href={releaseUrl} target={`_blank`} rel={`noopener noreferrer`} aria-label={`Listen to ${currentRelease.title} on ${provider}`}>{featuredContent}</a> : <button id={`hero-featured-album-${index}`} className={`featured-release featured-release--signal`} type={`button`} onClick={() => onListen(slide.releaseIndex)} aria-label={`Load ${currentRelease.title} in the Spotify player`}>{featuredContent}</button>}
       </div>;
     })}
     <div className={`hero-slider__controls`} aria-label={`Slide controls`}>

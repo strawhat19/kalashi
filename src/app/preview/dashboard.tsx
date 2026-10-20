@@ -1,2 +1,5 @@
-import DashboardScreen from '../../features/account/DashboardScreen';
-export default function Page() { return <DashboardScreen preview />; }
+import { Redirect } from 'expo-router';
+
+const DashboardAlias = () => <Redirect href={`/dashboard`} />;
+
+export default DashboardAlias;

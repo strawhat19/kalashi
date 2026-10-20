@@ -1,2 +1,3 @@
-import InfoScreen from '../features/account/InfoScreen';
-export default function Page() { return <InfoScreen page={`contact`} />; }
+import InfoPage from '../features/public/InfoPage';
+const ContactPage = () => <InfoPage page={`contact`} />;
+export default ContactPage;

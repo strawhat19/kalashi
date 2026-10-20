@@ -1,0 +1,27 @@
+.kalashi-inner-site { min-height: 100vh; overflow: clip; }
+.site-page-content { min-width: 0; min-height: calc(100vh - 360px); padding-top: 22px; outline: none; }
+.shared-site-footer { margin-top: clamp(48px, 6vw, 100px); padding: 32px 3.75% 24px; border-top: 1px solid var(--border); }
+.shared-site-footer__top, .shared-site-footer__bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; }
+.shared-site-footer__brand small { font-size: 8px; letter-spacing: 1.15px; }
+.shared-site-footer__navigation { display: flex; flex-wrap: wrap; gap: 14px 24px; }
+.shared-site-footer__link, .shared-site-footer__credit { display: inline-flex; gap: 8px; align-items: center; min-height: 44px; font-size: 12px; transition: color 220ms ease; }
+.shared-site-footer__link:hover, .shared-site-footer__credit:hover { color: var(--green); }
+.shared-site-footer__bottom { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: 9px; letter-spacing: 1.4px; }
+.shared-site-footer__credit { font-size: 11px; letter-spacing: 0; }
+.site-scroll-top { position: fixed; z-index: 40; right: max(20px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom)); display: grid; place-items: center; width: 46px; height: 46px; padding: 0; border: 1px solid #b1f75066; border-radius: 50%; background: #111510ed; color: #b1f750; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(10px); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); transition: opacity 250ms ease, transform 300ms ease, background 220ms ease, visibility 0s linear 300ms; cursor: pointer; }
+.site-scroll-top.is-visible { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); transition-delay: 0s; }
+.site-scroll-top:hover { color: #090a09; background: #b1f750; }
+.site-scroll-top:focus-visible { outline: 2px solid #b1f750; outline-offset: 4px; }
+.kalashi-site.kalashi-account-site .site-header { min-height: 72px; }
+.kalashi-site.kalashi-account-site .site-header::after { right: 0; left: 0; }
+.kalashi-site.kalashi-account-site .site-header .mini-visualizer { --mini-visualizer-size: 56px; --mini-visualizer-mark-size: 17px; }
+.kalashi-account-site .site-page-content { padding-top: 16px; }
+@media (max-width: 700px) {
+  .shared-site-footer { padding-inline: 5%; }
+  .shared-site-footer__top { align-items: flex-start; flex-direction: column; gap: 16px; }
+  .shared-site-footer__navigation { gap: 4px 20px; }
+  .shared-site-footer__bottom { gap: 12px; }
+  .shared-site-footer__credit { width: 100%; justify-content: flex-end; }
+  .kalashi-site.kalashi-account-site .site-header { min-height: 72px; }
+}
+@media (prefers-reduced-motion: reduce) { .site-scroll-top { transition: none; transform: none; } }

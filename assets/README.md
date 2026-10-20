@@ -8,8 +8,12 @@ Artist imagery and release details were sourced from the artist's [official Spot
 | `music/come-thru.jpg` | https://i.scdn.co/image/ab67616d0000b2736b77e45239f92c8501ecbaff |
 | `music/missery.jpg` | https://i.scdn.co/image/ab67616d0000b273de521dd3aaa065eec331fa62 |
 | `music/passenger-princess.jpg` | https://i.scdn.co/image/ab67616d0000b273e05e6e4489cb9dc3a51cbe97 |
+| `music/kiss-n-tell.jpg` | https://m.media-amazon.com/images/I/516rS5eabzL._SX472_SY472_BL0_QL100_.jpg |
+| `music/autobahn.jpg` | https://m.media-amazon.com/images/I/61L3vFQkIYL.jpg |
 
 The web copies live in `public/media/music/`. Keep both copies in sync when replacing artwork.
+
+The Kiss N Tell and Autobahn artwork was sourced from their official Amazon Music release pages on October 20, 2026. Their release dates and Spotify's current top-track order are documented in [music-highlights.md](../docs/music-highlights.md).
 
 Anton and Space Grotesk come from [Google Fonts](https://github.com/google/fonts/tree/main/ofl). Their SIL Open Font License files are included in `fonts/`. Fonts are bundled locally for web and native; no runtime font CDN is required.
 

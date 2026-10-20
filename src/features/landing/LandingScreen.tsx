@@ -4,6 +4,8 @@ import Svg, { Path } from 'react-native-svg';
 import { colors, fonts } from '../../theme/tokens';
 import { LinearGradient } from 'expo-linear-gradient';
 import { artist, releases } from '../../config/artist';
+import PopularTracks from '../../components/PopularTracks';
+import ReleaseHighlights from '../public/ReleaseHighlights';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AudioVisualizer from '../../components/visualizer/AudioVisualizer';
 import { Alert, Image, Linking, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
@@ -86,14 +88,17 @@ export default function LandingScreen() {
 
         <View onLayout={event => { sections.current.music = event.nativeEvent.layout.y; }} style={[styles.content, styles.section, { paddingHorizontal: gutter }]}>
           <View style={styles.sectionHeading}>
-            <View style={styles.sectionTitleGroup}><Text style={styles.sectionIndex}>01 / THE MUSIC</Text><Text accessibilityRole="header" style={[styles.sectionTitle, { fontSize: compact ? 54 : 76 }]}>ON REPEAT.</Text></View>
+            <View style={styles.sectionTitleGroup}><Text style={styles.sectionIndex}>01 / THE MUSIC</Text><Text accessibilityRole="header" style={[styles.sectionTitle, { fontSize: compact ? 54 : 76 }]}>FRESH FREQUENCIES.</Text></View>
             <Text style={styles.headingAccent}>↗</Text>
           </View>
           <Text style={styles.sectionDescription}>Find your next late-night obsession.</Text>
+          <ReleaseHighlights id={`landing-latest-releases`} />
+          <PopularTracks id={`landing-popular-tracks`} />
+          <Text nativeID={`landing-catalog-heading`} style={styles.sectionIndex}>{`MORE FROM KALASHI`}</Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -gutter }} contentContainerStyle={[styles.releaseList, { paddingHorizontal: gutter }]}>
             {releases.map((release, index) => (
               <Pressable key={release.title} onPress={() => void openSpotify(release.spotifyUrl)} accessibilityRole="link" accessibilityLabel={`Listen To ${release.title} On Spotify`} style={({ pressed }) => [styles.releaseCard, { width: releaseWidth }, pressed && styles.pressed]}>
-                <View style={styles.releaseImageWrap}><Image source={release.artwork} style={styles.releaseImage} accessibilityLabel={`${release.title} Cover`} />{index === 0 && <View style={styles.latestTag}><Text style={styles.latestText}>LATEST RELEASE</Text></View>}<View style={styles.playButton}><Text style={styles.playGlyph}>▶</Text></View></View>
+                <View style={styles.releaseImageWrap}><Image source={release.artwork} style={styles.releaseImage} accessibilityLabel={`${release.title} Cover`} /><View style={styles.playButton}><Text style={styles.playGlyph}>▶</Text></View></View>
                 <View style={styles.releaseMeta}><Text style={styles.releaseType}>{release.type.toUpperCase()} / {release.year}</Text><Text style={styles.releaseNumber}>0{index + 1}</Text></View>
                 <Text style={styles.releaseTitle}>{release.title}</Text>
               </Pressable>
